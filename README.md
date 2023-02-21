@@ -3,23 +3,25 @@
 Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
 defined DOM context.
 
+[Live demo](https://weroro-sk.github.io/sms-href/demo/)
+
 _You can avoid this library and use the universal `;?&` separator `sms:1234;?&body=Your%20message`, but this is not work
 everywhere._
 
-|                    |            |
-|--------------------|------------|
-| Webpack build size | `1.77 kB`  |
+|                    |           |
+|--------------------|-----------|
+| Webpack build size | `1.77 kB` |
 
 ---
 
 - [Installation](#installation)
 - [Usage](#basic-usage)
 - [API](#api)
-    - [Instance](#new-smshref---options-optionsoptions--)
+    - [Instance](#instance)
         - [Custom separator](#custom-separator-definition)
-    - [fixAll](#fixall---context-element--htmlelement--document--document--)
-    - [fixValue](#fixvalue--smsvalue--string--encode-boolean--)
-    - [create](#create--smsconfiguration--smsconfiguration--encode-boolean-)
+    - [fixAll](#fixall)
+    - [fixValue](#fixvalue)
+    - [create](#create)
 - [Types](#types)
     - [ResultCode](#resultcode)
     - [Options](#options)
@@ -68,7 +70,11 @@ const smsHref: SmsHref = new SmsHref();
 
 ---
 
-### new SmsHref( [ options: [Options](#options) ] )
+### Instance
+
+Syntax:
+
+### ``` new SmsHref( [ options: Options ] ) ```
 
 Instance of `SmsHref`
 
@@ -80,15 +86,15 @@ const smsHref: SmsHref = new SmsHref();
 
 Constructor parameters:
 
-|                                    | type                  | default | description                                                                                                                                                                                                                                                                                                                                   |
-|------------------------------------|-----------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`options`]                        | [`Options`](#options) |         | Configuration of custom separator and allowed devices - [Show detail](#options)                                                                                                                                                                                                                                                               |
-| [`options.allow`]                  | [`Devices`](#devices) |         | List of enable/disable devices - [Show detail](#devices)                                                                                                                                                                                                                                                                                      |
-| [`options.allow.mobile` = true ]   | `boolean`             | `true`  | Enable/disable href update for mobile devices                                                                                                                                                                                                                                                                                                 |
-| [`options.allow.tablet` = true ]   | `boolean`             | `true`  | Enable/disable href update for tablet devices                                                                                                                                                                                                                                                                                                 |
-| [`options.allow.facebook` = true ] | `boolean`             | `true`  | Enable/disable href update for Facebook app web view                                                                                                                                                                                                                                                                                          |
-| [`options.separator` = null ]      | `string` `null`       | `null`  | User defined SMS body (`body=`) separator. [Read more](#custom-separator-definition) <br/>**NOTE**: Internal platform detection and allowed devices list will be disabled.                                                                                                                                                                    |
-| [`options.encode` = true ]         | `boolean`             | `true`  | Enable/disable message text encoding globally ( e.g., `encodeURIComponent` )<br/>**NOTE**: Methods [fixValue()](#fixvalue--smsvalue--string--encode-boolean--) and [create()](#create--smsconfiguration--smsconfiguration--encode-boolean-) have their own parameter for enable/disable encoding and this global parameter can be overridden. |
+|                                    | type                  | default | description                                                                                                                                                                                                                                          |
+|------------------------------------|-----------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`options`]                        | [`Options`](#options) |         | Configuration of custom separator and allowed devices - [Show detail](#options)                                                                                                                                                                      |
+| [`options.allow`]                  | [`Devices`](#devices) |         | List of enable/disable devices - [Show detail](#devices)                                                                                                                                                                                             |
+| [`options.allow.mobile` = true ]   | `boolean`             | `true`  | Enable/disable href update for mobile devices                                                                                                                                                                                                        |
+| [`options.allow.tablet` = true ]   | `boolean`             | `true`  | Enable/disable href update for tablet devices                                                                                                                                                                                                        |
+| [`options.allow.facebook` = true ] | `boolean`             | `true`  | Enable/disable href update for Facebook app web view                                                                                                                                                                                                 |
+| [`options.separator` = null ]      | `string` `null`       | `null`  | User defined SMS body (`body=`) separator. [Read more](#custom-separator-definition) <br/>**NOTE**: Internal platform detection and allowed devices list will be disabled.                                                                           |
+| [`options.encode` = true ]         | `boolean`             | `true`  | Enable/disable message text encoding globally ( e.g., `encodeURIComponent` )<br/>**NOTE**: Methods [fixValue()](#fixvalue) and [create()](#create) have their own parameter for enable/disable encoding and this global parameter can be overridden. |
 
 Example (disable tablets and facebook app web view):
 
@@ -149,7 +155,11 @@ const smsHref: SmsHref = new SmsHref({
 
 ---
 
-### fixAll( [ context: Element | HTMLElement | Document = _document_ ] )
+### fixAll
+
+Syntax:
+
+### ``` fixAll( [ context: Element | HTMLElement | Document ] ) ```
 
 Finds and update all anchor links with `sms:` protocol value by current platform in set DOM context.
 
@@ -213,7 +223,11 @@ smsHref.fixAll()
 
 ---
 
-### fixValue( smsValue: string [, encode: boolean ] )
+### fixValue
+
+Syntax:
+
+### ``` fixValue( smsValue: string [, encode: boolean ] ) ```
 
 Update input string value by current platform.
 
@@ -244,7 +258,11 @@ smsHref.fixValue('1234@body=Your message', false);
 
 ---
 
-### create( smsConfiguration: [SmsConfiguration](#smsconfiguration) [, encode: boolean] )
+### create
+
+Syntax:
+
+### ``` create( smsConfiguration: [SmsConfiguration](#smsconfiguration) [, encode: boolean] ) ```
 
 Creates `sms:` href string from phone number and sms message text.
 

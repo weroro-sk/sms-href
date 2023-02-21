@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npx tsc",
     "build:pack": "npm run build && npm pack",
-    "demo": "npx webpack --progress --mode=production --env minimize",
+    "demo": "npx webpack --progress --mode=production",
     "clean": "rm -rf ./lib",
     "prebuild": "npm run clean",
     "predemo": "npm run build",
@@ -21,8 +21,6 @@
   },
   "keywords": [
     "sms",
-    "sms:",
-    "sms://",
     "link",
     "href",
     "hypertext",
