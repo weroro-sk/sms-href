@@ -139,7 +139,7 @@ function customSeparatorMechanism(): string | null {
         return ANDROID_SEPARATOR;
 
     if (platform.name === 'IOS') {
-        if (MIN_IOS_VERSION < platform.version.major)
+        if (platform.version.major <= MIN_IOS_VERSION)
             return IOS_7_AND_LOWER_SEPARATOR
         return IOS_8_AND_HIGHER_SEPARATOR;
     }
