@@ -15,7 +15,7 @@
     "postbuild:pack": "npm run clean"
   },
   "author": {
-    "name": "Dárius Bokor",
+    "name": "Dárius Bokor - WERORO.sk",
     "email": "info@weroro.sk",
     "url": "https://www.weroro.sk/"
   },
@@ -36,6 +36,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/weroro-sk/sms-href"
+  },
+  "bugs": {
+    "url": "https://github.com/weroro-sk/sms-href/issues"
   },
   "license": "MIT",
   "devDependencies": {
