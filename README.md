@@ -3,7 +3,7 @@
 Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
 defined DOM context.
 
-[Live demo](https://weroro-sk.github.io/sms-href/demo/)
+[![Live demo](qr_scan.png)](https://weroro-sk.github.io/sms-href/demo/)
 
 _You can avoid this library and use the universal `;?&` separator `sms:1234;?&body=Your%20message`, but this is not work
 everywhere._
