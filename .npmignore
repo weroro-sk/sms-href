@@ -1,0 +1,8 @@
+.idea/
+.git/
+node_modules/
+src/
+demo/
+package-json.lock
+.npmrc
+webpack.config.js

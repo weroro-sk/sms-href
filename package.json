@@ -1,0 +1,51 @@
+{
+  "name": "sms-href",
+  "version": "1.0.0",
+  "description": "Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or defined DOM context.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "build:pack": "npm run build && npm pack",
+    "demo": "npx webpack --progress --mode=production --env minimize",
+    "clean": "rm -rf ./lib",
+    "prebuild": "npm run clean",
+    "predemo": "npm run build",
+    "postdemo": "npm run clean",
+    "postbuild:pack": "npm run clean"
+  },
+  "author": {
+    "name": "Dárius Bokor",
+    "email": "info@weroro.sk",
+    "url": "https://www.weroro.sk/"
+  },
+  "keywords": [
+    "sms",
+    "sms:",
+    "sms://",
+    "link",
+    "href",
+    "hypertext",
+    "message",
+    "sms-protocol",
+    "sms-message",
+    "sms-link",
+    "sms-href",
+    "sms-create",
+    "sms-update",
+    "generate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weroro-sk/sms-href"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.14.0",
+    "terser-webpack-plugin": "^5.3.6",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
