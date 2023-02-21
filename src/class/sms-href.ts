@@ -221,7 +221,7 @@ export class SmsHref implements ISmsHref {
 
         const ios: number = this._isIOS(UA);
         if (ios > 0)
-            return MIN_IOS_VERSION <= ios ? IOS_7_AND_LOWER_SEPARATOR : IOS_8_AND_HIGHER_SEPARATOR;
+            return ios <= MIN_IOS_VERSION ? IOS_7_AND_LOWER_SEPARATOR : IOS_8_AND_HIGHER_SEPARATOR;
 
         return null;
     }
