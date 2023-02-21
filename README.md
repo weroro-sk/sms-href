@@ -74,7 +74,7 @@ const smsHref: SmsHref = new SmsHref();
 
 Syntax:
 
-### ``` new SmsHref( [ options: Options ] ) ```
+#### ``` new SmsHref( [ options: Options ] ) ```
 
 Instance of `SmsHref`
 
@@ -159,7 +159,7 @@ const smsHref: SmsHref = new SmsHref({
 
 Syntax:
 
-### ``` fixAll( [ context: Element | HTMLElement | Document ] ) ```
+#### ``` fixAll( [ context: Element | HTMLElement | Document ] ) ```
 
 Finds and update all anchor links with `sms:` protocol value by current platform in set DOM context.
 
@@ -227,7 +227,7 @@ smsHref.fixAll()
 
 Syntax:
 
-### ``` fixValue( smsValue: string [, encode: boolean ] ) ```
+#### ``` fixValue( smsValue: string [, encode: boolean ] ) ```
 
 Update input string value by current platform.
 
@@ -262,7 +262,7 @@ smsHref.fixValue('1234@body=Your message', false);
 
 Syntax:
 
-### ``` create( smsConfiguration: [SmsConfiguration](#smsconfiguration) [, encode: boolean] ) ```
+#### ``` create( smsConfiguration: SmsConfiguration [, encode: boolean] ) ```
 
 Creates `sms:` href string from phone number and sms message text.
 
