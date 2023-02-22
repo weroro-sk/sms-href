@@ -1,12 +1,12 @@
 <p align="center">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="sms_href_logo.png">
-      <img src="sms_href_logo.png" height="139" alt="">
+      <img src="sms_href_logo.png" height="139" alt="SMS Href">
     </picture>
 </p>
 
 <p align="center">
-Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
+SMS Href generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
 defined DOM context.
 </p>
 
