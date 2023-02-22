@@ -51,10 +51,10 @@ export class SmsHref implements ISmsHref {
             if (!this._separator)
                 return resolve(CODE_UNSUPPORTED_OS);
 
-            const elements: NodeListOf<HTMLAnchorElement> = context.querySelectorAll(`a[href^="${PROTOCOL}"]`);
+            const elements: NodeListOf<HTMLAnchorElement> = context?.querySelectorAll(`a[href^="${PROTOCOL}"]`);
 
             // Anchors with sms: href doesn't exist
-            if (!elements.length)
+            if (!elements?.length)
                 return resolve(CODE_NOT_FOUND);
 
             elements.forEach((element: HTMLAnchorElement): void => {
@@ -161,11 +161,11 @@ export class SmsHref implements ISmsHref {
     /**
      * @description Facebook APP web view detection
      *
-     * @returns `TRUE` for facebook app web view or `FALSE` if it's not.
+     * @returns `1` for facebook app web view or `-1` if it's not.
      * @private
      */
-    private _isFacebookApp(UA: string): boolean {
-        return /fba[nv]/gi.test(UA);
+    private _isFacebookApp(UA: string): number {
+        return /fba[nv]/gi.test(UA) ? 1 : -1;
     }
 
     /**
@@ -211,7 +211,7 @@ export class SmsHref implements ISmsHref {
         const UA: string = navigator.userAgent;
 
         // Facebook app web view
-        if (!this._options.allow?.facebook && this._isFacebookApp(UA))
+        if (!this._options.allow?.facebook && this._isFacebookApp(UA) > 0)
             return null;
 
         // Platform detection

@@ -1,6 +1,6 @@
 {
   "name": "sms-href",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or defined DOM context.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -31,7 +31,8 @@
     "sms-href",
     "sms-create",
     "sms-update",
-    "generate"
+    "generate",
+    "weroro"
   ],
   "repository": {
     "type": "git",

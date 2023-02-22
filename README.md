@@ -1,16 +1,33 @@
-# SMS href
+<p align="center">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="sms_href_logo.png">
+      <img src="sms_href_logo.png" height="139" alt="">
+    </picture>
+</p>
 
+<p align="center">
 Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
 defined DOM context.
+</p>
 
-[![Live demo](qr_scan.png)](https://weroro-sk.github.io/sms-href/demo/)
+---
 
-_You can avoid this library and use the universal `;?&` separator `sms:1234;?&body=Your%20message`, but this is not work
-everywhere._
+<p align="center">
+  <a href="https://weroro-sk.github.io/sms-href/demo/">Live demo</a>
+</p>
 
-|                    |           |
-|--------------------|-----------|
-| Webpack build size | `1.77 kB` |
+---
+
+<p align="center">
+  <i>You can avoid this library and use the universal <code>;?&</code> separator <code>sms:1234;?&body=Your%20message</code>, but this is not 
+work everywhere.</i>
+</p>
+
+---
+
+<p align="center">
+| <span>Webpack build size</span> | <b>1.77 kB</b> |
+</p>
 
 ---
 
