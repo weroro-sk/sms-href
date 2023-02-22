@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="sms_href_logo.png">
-      <img src="sms_href_logo.png" height="139" alt="SMS Href">
+      <img src="sms_href_logo.png" alt="SMS Href">
     </picture>
 </p>
 
