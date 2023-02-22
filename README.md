@@ -26,7 +26,7 @@ work everywhere.</i>
 ---
 
 <p align="center">
-| <span>Webpack build size</span> | <b>1.77 kB</b> |
+| <span>Webpack build size</span> | <b>1.89 kB</b> |
 </p>
 
 ---

@@ -1,6 +1,6 @@
 {
   "name": "sms-href",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or defined DOM context.",
   "author": "Dárius Bokor - WERORO.sk",
   "license": "MIT",
@@ -41,6 +41,7 @@
     "weroro"
   ],
   "devDependencies": {
+    "@total-typescript/ts-reset": "^0.3.7",
     "@types/node": "^18.14.0",
     "terser-webpack-plugin": "^5.3.6",
     "tslib": "^2.5.0",

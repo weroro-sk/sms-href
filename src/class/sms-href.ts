@@ -1,3 +1,5 @@
+import "@total-typescript/ts-reset";
+
 import {ISmsHref} from "./sms-href.interface";
 import {Devices, Options, ResultCode, SmsConfiguration} from "../mixed/types";
 import {
@@ -12,6 +14,7 @@ import {
     PROTOCOL,
     PROTOCOL_REGEX,
 } from "../mixed/constants";
+import {merge} from "../mixed/helpers";
 
 export class SmsHref implements ISmsHref {
 
@@ -40,7 +43,7 @@ export class SmsHref implements ISmsHref {
      *                  Read documentation for more information.
      */
     public constructor(options?: Options) {
-        Object.assign(this._options, options);
+        merge(this._options, options);
         this._separator = this._getSeparator();
     }
 
