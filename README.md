@@ -26,7 +26,7 @@ work everywhere.</i>
 ---
 
 <p align="center">
-| <span>Webpack build size</span> | <b>1.89 kB</b> |
+| <span>Webpack build size</span> | <b>1.77 KB</b> |
 </p>
 
 ---
@@ -55,20 +55,28 @@ work everywhere.</i>
 
 ## DEV runners
 
-| runner               | output                                  | description                             |
-|----------------------|-----------------------------------------|-----------------------------------------|
-| `npm run build`      | `./lib/**/*`                            | Transpile from Typescript to Javascript |
-| `npm run build:pack` | `./sms-href-{package-json-version}.tgz` | Create NPM package file (`*.tgz`)       |
-| `npm run demo`       | `./demo/dist/demo.js`                   | Build demo                              |
+| runner               | output                                  | description                               |
+|----------------------|-----------------------------------------|-------------------------------------------|
+| `npm run build`      | `./lib/**/*`                            | Transpile from Typescript to Javascript   |
+| `npm run build:pack` | `./sms-href-{package-json-version}.tgz` | Create NPM package file (`*.tgz`)         |
+| `npm run demo`       | `./demo/dist/demo.js`                   | Build demo and measure minimal build size |
 
-## Basic usage
+## Basic usage (without catching outputs)
 
 ```typescript
 import {SmsHref} from "sms-href";
 
 const smsHref: SmsHref = new SmsHref();
 
-(async () => await smsHref.fixAll())();
+// As promise
+smsHref.fixAll().catch();
+
+// OR sync
+try {
+    await smsHref.fixAll();
+} catch (e) {
+}
+
 ```
 
 | Tested platforms         |
@@ -84,8 +92,6 @@ const smsHref: SmsHref = new SmsHref();
 ---
 
 ## API
-
----
 
 ### Instance
 
@@ -184,7 +190,7 @@ Finds and update all anchor links with `sms:` protocol value by current platform
 |-------------------------|------------------------------------|------------|------------------------------------|
 | [`context` = document ] | `Element` `HTMLElement` `Document` | `document` | Defines parent DOM node for search |
 | returns                 | `Promise<ResultCode>`              |            |                                    |
-| throws                  | `TypeError`                        |            |                                    |
+| throws                  | `Promise.catch<ResultCode>`        |            |                                    |
 
 Example:
 
@@ -215,19 +221,15 @@ const smsHref: SmsHref = new SmsHref();
 
 smsHref.fixAll()
     .then((resultCode: ResultCode): void => {
-        switch (resultCode) {
-            case CODE_SUCCESS:
-                console.log(`All sms: href values in anchors was updated`);
-                break;
-            case CODE_NOT_FOUND:
-                console.log(`'Anchors with sms: href value doesn't exist'`);
-                break;
-            case CODE_UNSUPPORTED_OS:
-                console.log(`Current platform doesn't support sms: href protocol`);
-                break;
-        }
+        if (resultCode === CODE_SUCCESS)
+            console.log(`All sms: href values in anchors was updated`);
     })
-    .catch(err => console.error(err.message));
+    .catch((resultCode: any): void => {
+        if (resultCode === CODE_NOT_FOUND)
+            console.log(`'Anchors with sms: href value doesn't exist'`);
+        else if (resultCode === CODE_UNSUPPORTED_OS)
+            console.log(`Current platform doesn't support sms: href protocol`);
+    });
 ```
 
 [ResultCode](#resultcode) constants list:
@@ -248,12 +250,11 @@ Syntax:
 
 Update input string value by current platform.
 
-|            | type        | default                            | description                                                         |
-|------------|-------------|------------------------------------|---------------------------------------------------------------------|
-| `smsValue` | `string`    |                                    | Input string for update                                             |
-| [`encode`] | `boolean`   | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
-| returns    | `string`    |                                    |                                                                     |
-| throws     | `TypeError` |                                    | If `smsValue` is empty or not provided.                             |
+|            | type      | default                            | description                                                         |
+|------------|-----------|------------------------------------|---------------------------------------------------------------------|
+| `smsValue` | `string`  |                                    | Input string for update                                             |
+| [`encode`] | `boolean` | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
+| returns    | `string`  |                                    |                                                                     |
 
 Example:
 
@@ -292,7 +293,11 @@ Creates `sms:` href string from phone number and sms message text.
 | returns                      | `string` - sms href valid string        |                                    |                                                                     |
 | throws                       | `TypeError`                             |                                    | If `phone` and `message` are both not provided                      |
 
-**NOTE**: Phone and message are both optional, but one of them must be provided.
+**NOTES**:
+
+- Phone and message are both optional, but one of them must be provided.
+- Phone number format validation is not implemented. You should use own validation.
+- SMS message format validation is not implemented. You should use own validation.
 
 Example:
 

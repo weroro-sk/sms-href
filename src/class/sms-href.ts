@@ -47,18 +47,24 @@ export class SmsHref implements ISmsHref {
         this._separator = this._getSeparator();
     }
 
+    /**
+     * @description Finds and update all anchor links with `sms:` protocol value
+     *              by current platform in set `DOM` context.
+     *
+     * @param [context] _[optional]_ - Defines parent `DOM` node for search [default - `document`]
+     */
     public fixAll(context: Element | HTMLElement | Document = document): Promise<ResultCode> {
         return new Promise((resolve: (resultCode: (ResultCode | PromiseLike<ResultCode>)) => void, reject: (reason?: any) => void): void => {
 
             // Separator was not set
             if (!this._separator)
-                return resolve(CODE_UNSUPPORTED_OS);
+                return reject(CODE_UNSUPPORTED_OS);
 
             const elements: NodeListOf<HTMLAnchorElement> = context?.querySelectorAll(`a[href^="${PROTOCOL}"]`);
 
             // Anchors with sms: href doesn't exist
             if (!elements?.length)
-                return resolve(CODE_NOT_FOUND);
+                return reject(CODE_NOT_FOUND);
 
             elements.forEach((element: HTMLAnchorElement): void => {
 
@@ -68,11 +74,7 @@ export class SmsHref implements ISmsHref {
                 if (!content?.trim())
                     return;
 
-                try {
-                    element.href = this.fixValue(content, this._options.encode);
-                } catch (err) {
-                    reject(err);
-                }
+                element.href = this.fixValue(content, this._options.encode);
 
             });
 
@@ -81,10 +83,13 @@ export class SmsHref implements ISmsHref {
         });
     }
 
+    /**
+     * @description Update input string value by current platform.
+     *
+     * @param smsValue Input string for update
+     * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     */
     public fixValue(smsValue: string, encode?: boolean): string {
-
-        if (!smsValue?.trim())
-            throw new TypeError('SMS href text must be provided.');
 
         if (typeof this._separator !== 'string' || !BODY_REGEX.test(smsValue))
             return smsValue;
@@ -102,6 +107,12 @@ export class SmsHref implements ISmsHref {
             .replace(BODY_REGEX, this._separator + BODY);
     }
 
+    /**
+     * @description Creates `sms:` href string from phone number and sms message text
+     *
+     * @param smsConfiguration
+     * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     */
     public create(smsConfiguration: SmsConfiguration, encode?: boolean): string {
 
         const phone: string | undefined = smsConfiguration?.phone!?.toString().trim();
@@ -116,7 +127,7 @@ export class SmsHref implements ISmsHref {
             smsValue += phone;
 
         if (!!message)
-            smsValue += '@' + BODY + message;
+            smsValue += ANDROID_SEPARATOR + BODY + message;
 
         return this.fixValue(smsValue, encode);
     }
