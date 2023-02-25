@@ -28,7 +28,7 @@ import {
     PROTOCOL_REGEX,
     BODY, BODY_REGEX,
 } from "../contants/private.contants";
-import {merge} from "../helpers/helpers";
+import {merge} from "../helpers";
 
 
 export class SmsHref implements ISmsHref {
