@@ -254,7 +254,7 @@ Update input string value by current platform.
 |------------|-------------------|------------------------------------|---------------------------------------------------------------------|
 | `smsValue` | `string`          |                                    | Input string for update                                             |
 | [`encode`] | `boolean`         | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
-| returns    | `Promise<string>` |                                    |                                                                     |
+| returns    | `Promise<string>` |                                    | Valid SMS Href `sms:`anchor string                                  |
 
 Example:
 
@@ -284,14 +284,14 @@ Syntax:
 
 Creates `sms:` href string from phone number and sms message text.
 
-|                              | type                                      | default                            | description                                                         |
-|------------------------------|-------------------------------------------|------------------------------------|---------------------------------------------------------------------|
-| `smsConfiguration`           | [`SmsConfiguration`](#smsconfiguration)   |                                    |                                                                     |
-| `smsConfiguration[.phone]`   | `string` `number`                         |                                    | SMS Phone number                                                    |
-| `smsConfiguration[.message]` | `string`                                  |                                    | SMS message text                                                    |
-| [ `encode` ]                 | `boolean`                                 | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
-| returns                      | `Promise<string>` - sms href valid string |                                    |                                                                     |
-| throws                       | `TypeError, reject<TypeError>`            |                                    | If `phone` and `message` are both not provided                      |
+|                              | type                                                   | default                            | description                                                         |
+|------------------------------|--------------------------------------------------------|------------------------------------|---------------------------------------------------------------------|
+| `smsConfiguration`           | [`SmsConfiguration`](#smsconfiguration)                |                                    |                                                                     |
+| `smsConfiguration[.phone]`   | `string` `number`                                      |                                    | SMS Phone number                                                    |
+| `smsConfiguration[.message]` | `string`                                               |                                    | SMS message text                                                    |
+| [ `encode` ]                 | `boolean`                                              | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
+| returns                      | `Promise<string>` - Valid SMS Href `sms:`anchor string |                                    |                                                                     |
+| throws                       | `Promise.reject<TypeError>`                            |                                    | If `phone` and `message` are both not provided                      |
 
 **NOTES**:
 

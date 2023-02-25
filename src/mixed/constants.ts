@@ -27,18 +27,24 @@ export const CODE_UNSUPPORTED_OS: ResultCode = 501;
 /**
  * @description Body separator for Android platform
  * @see https://stackoverflow.com/a/19126326
+ *
+ * @default ?
  */
 export const ANDROID_SEPARATOR: string = '?';
 
 /**
  * @description Body separator for IOS platform version 7 and lower
  * @see https://stackoverflow.com/a/19126326
+ *
+ * @default ;
  */
 export const IOS_7_AND_LOWER_SEPARATOR: string = ';';
 
 /**
  * @description Body separator for IOS platform version 8 and higher
  * @see https://stackoverflow.com/a/19126326
+ *
+ * @default &
  */
 export const IOS_8_AND_HIGHER_SEPARATOR: string = '&';
 
@@ -48,6 +54,8 @@ export const IOS_8_AND_HIGHER_SEPARATOR: string = '&';
 
 /**
  * @description **`iOS7`** allegedly doesn't support **`sms:`** href links.
+ *
+ * @default 7
  */
 export const MIN_IOS_VERSION: number = 7;
 

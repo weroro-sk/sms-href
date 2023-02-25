@@ -5,7 +5,7 @@ module.exports = {
     entry: {
         "demo": path.resolve(__dirname, 'demo', 'src', 'index.js'),
         // Minimal build
-        "size_measuring": path.resolve(__dirname, 'demo', 'src', 'do_not_edit_this_file.js')
+        "size_measuring": path.resolve(__dirname, 'demo', 'src', 'size_measuring.js')
     },
     output: {
         filename: '[name].js',

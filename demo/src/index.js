@@ -15,22 +15,25 @@ smsHref.fixAll()
     .then((resultCode) => {
         /** @type {HTMLElement} */
         const info = document.querySelector('.info');
-        switch (resultCode) {
-            case CODE_SUCCESS:
-                info.classList.add('bg-success');
-                info.textContent = 'All sms: href values in anchors on this webpage was updated';
-                break;
-            case CODE_NOT_FOUND:
-                info.classList.add('bg-warning');
-                info.textContent = 'Anchors with sms: href value doesn\'t exist';
-                break;
-            case CODE_UNSUPPORTED_OS:
-                info.classList.add('bg-danger');
-                info.textContent = 'Current platform doesn\'t support sms: href protocol';
-                break;
+
+        if (resultCode === CODE_SUCCESS) {
+            info.classList.add('bg-success');
+            info.textContent = 'All sms: href values in anchors on this webpage was updated';
         }
     })
-    .catch(err => console.error(err.message));
+    .catch((errorResultCode) => {
+        /** @type {HTMLElement} */
+        const info = document.querySelector('.info');
+
+        if (errorResultCode === CODE_NOT_FOUND) {
+            info.classList.add('bg-warning');
+            info.textContent = 'Anchors with sms: href value doesn\'t exist';
+
+        } else if (errorResultCode === CODE_UNSUPPORTED_OS) {
+            info.classList.add('bg-danger');
+            info.textContent = 'Current platform doesn\'t support sms: href protocol';
+        }
+    });
 
 ////////////
 // CREATE SMS HREF LINK
@@ -38,18 +41,20 @@ smsHref.fixAll()
 
 const create = document.querySelector('.create');
 create.addEventListener('submit', (evt) => {
-    action(evt, (inputs, error) => {
-        try {
-            inputs.output.value = smsHref.create(
-                {
-                    phone: inputs.phone.value,
-                    message: inputs.message.value
-                },
-                inputs['encode-create'].checked
-            );
-        } catch (err) {
-            error.textContent = err.message;
-        }
+    action(evt, async (inputs, error) => {
+        smsHref.create(
+            {
+                phone: inputs.phone.value,
+                message: inputs.message.value
+            },
+            inputs['encode-create'].checked
+        )
+            .then((smsValue) => {
+                inputs.output.value = smsValue
+            })
+            .catch((smsHrefError) => {
+                error.textContent = smsHrefError.message;
+            });
     });
 });
 
@@ -59,15 +64,11 @@ create.addEventListener('submit', (evt) => {
 
 const update = document.querySelector('.update');
 update.addEventListener('submit', (evt) => {
-    action(evt, (inputs, error) => {
-        try {
-            inputs.fixed.value = smsHref.fixValue(
-                inputs['sms-text'].value,
-                inputs['encode-update'].checked
-            );
-        } catch (err) {
-            error.textContent = err.message;
-        }
+    action(evt, async (inputs, error) => {
+        inputs.fixed.value = await smsHref.fixValue(
+            inputs['sms-text'].value,
+            inputs['encode-update'].checked
+        );
     });
 });
 

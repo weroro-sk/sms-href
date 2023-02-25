@@ -1,5 +1,3 @@
-import "@total-typescript/ts-reset";
-
 import {ISmsHref} from "./sms-href.interface";
 import {
     Options,
@@ -66,6 +64,9 @@ export class SmsHref implements ISmsHref {
      *              by current platform in set `DOM` context.
      *
      * @param [context] _[optional]_ - Defines parent `DOM` node for search [default - `document`]
+     *
+     * @returns - Promise<ResultCode>
+     * @throws - Promise.catch<ResultCode>
      */
     public fixAll(context: TContextType = document): Promise<ResultCode> {
         return new Promise((resolve: TResolveType, reject: TRejectType): void => {
@@ -102,6 +103,8 @@ export class SmsHref implements ISmsHref {
      *
      * @param smsValue Input string for update
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     *
+     * @returns Valid SMS Href `sms:`anchor string
      */
     public async fixValue(smsValue: string, encode?: boolean): Promise<TSmsHrefValue> {
 
@@ -126,6 +129,9 @@ export class SmsHref implements ISmsHref {
      *
      * @param smsConfiguration
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     *
+     * @returns Valid SMS Href `sms:`anchor string
+     * @throws - Promise.reject<TypeError> - If `phone` and `message` are both not provided
      */
     public async create(smsConfiguration: SmsConfiguration, encode?: boolean): Promise<TSmsHrefValue> {
 
@@ -232,14 +238,16 @@ export class SmsHref implements ISmsHref {
      */
     private _getSeparator(): TSeparator {
 
+        const options: Options = this._options;
+
         // Custom defined separator
-        if (!!this._options.separator?.trim())
-            return this._options.separator!;
+        if (!!options.separator?.trim())
+            return options.separator!;
 
         const UA: string = navigator.userAgent;
 
         // Facebook app web view
-        if (!this._options.allow?.facebook && this._isFacebookApp(UA) > 0)
+        if (!options.allow?.facebook && this._isFacebookApp(UA) > 0)
             return null;
 
         // Platform detection
