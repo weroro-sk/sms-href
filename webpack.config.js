@@ -1,9 +1,5 @@
-const fs = require('fs');
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
-
-/** @type {PluginGetFileSize} */
-const {PluginGetFileSize} = require("./webpack-file-size-plugin");
 
 module.exports = {
     entry: {
@@ -26,35 +22,6 @@ module.exports = {
             },
         ]
     },
-    plugins: [
-        new PluginGetFileSize('size_measuring.js', {
-            pad: 2,
-            callback: (dataList) => {
-
-                console.log('\n\n');
-                console.table(dataList);
-                console.log('\n');
-
-                // Remove file/s
-                dataList.forEach(file => {
-
-                    const {filename, dir, related} = file;
-
-                    /** @type {string} */
-                    const filePath = path.resolve(dir, filename);
-                    /** @type {string} */
-                    const sourceMap = related?.sourceMap;
-
-                    if (fs.existsSync(filePath)) {
-                        fs.unlinkSync(filePath);
-                        if (!!sourceMap)
-                            fs.unlinkSync(path.resolve(dir, sourceMap));
-                    }
-                });
-
-            }
-        }),
-    ],
     optimization: {
         minimize: true,
         minimizer: [

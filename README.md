@@ -26,7 +26,7 @@ work everywhere.</i>
 ---
 
 <p align="center">
-| <span>Webpack build size</span> &lt; <b> 1.77 KB</b> |
+| Webpack + Terser build size &lt; <b> 1.77 KiB</b> [minimized] |
 </p>
 
 ---
