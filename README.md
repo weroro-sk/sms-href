@@ -26,7 +26,7 @@ work everywhere.</i>
 ---
 
 <p align="center">
-| Webpack + Terser build size &lt; <b> 1.77 KiB</b> [minimized] |
+| Webpack + Terser build size &lt; <b> 1.79 KiB</b> [minimized] |
 </p>
 
 ---
@@ -182,7 +182,7 @@ const smsHref: SmsHref = new SmsHref({
 
 Syntax:
 
-#### ``` fixAll( [ context: Element | HTMLElement | Document ] ) ```
+#### ``` async fixAll( [ context: Element | HTMLElement | Document ] ) : Promise<ResultCode> ```
 
 Finds and update all anchor links with `sms:` protocol value by current platform in set DOM context.
 
@@ -246,20 +246,20 @@ smsHref.fixAll()
 
 Syntax:
 
-#### ``` fixValue( smsValue: string [, encode: boolean ] ) ```
+#### ``` async fixValue( smsValue: string [, encode: boolean ] ) : Promise<string> ```
 
 Update input string value by current platform.
 
-|            | type      | default                            | description                                                         |
-|------------|-----------|------------------------------------|---------------------------------------------------------------------|
-| `smsValue` | `string`  |                                    | Input string for update                                             |
-| [`encode`] | `boolean` | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
-| returns    | `string`  |                                    |                                                                     |
+|            | type              | default                            | description                                                         |
+|------------|-------------------|------------------------------------|---------------------------------------------------------------------|
+| `smsValue` | `string`          |                                    | Input string for update                                             |
+| [`encode`] | `boolean`         | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
+| returns    | `Promise<string>` |                                    |                                                                     |
 
 Example:
 
 ```typescript
-smsHref.fixValue('1234@body=Your message');
+await smsHref.fixValue('1234@body=Your message');
 // Android  --> sms:1234?body=Your%20message
 // IOS <= 7 --> sms:1234;body=Your%20message
 // IOS >= 8 --> sms:1234&body=Your%20message
@@ -268,7 +268,7 @@ smsHref.fixValue('1234@body=Your message');
 Example (with disabled message encoding):
 
 ```typescript
-smsHref.fixValue('1234@body=Your message', false);
+await smsHref.fixValue('1234@body=Your message', false);
 // Android  --> sms:1234?body=Your message
 // IOS <= 7 --> sms:1234;body=Your message
 // IOS >= 8 --> sms:1234&body=Your message
@@ -280,18 +280,18 @@ smsHref.fixValue('1234@body=Your message', false);
 
 Syntax:
 
-#### ``` create( smsConfiguration: SmsConfiguration [, encode: boolean] ) ```
+#### ``` async create( smsConfiguration: SmsConfiguration [, encode: boolean] ) : Promise<string> ```
 
 Creates `sms:` href string from phone number and sms message text.
 
-|                              | type                                    | default                            | description                                                         |
-|------------------------------|-----------------------------------------|------------------------------------|---------------------------------------------------------------------|
-| `smsConfiguration`           | [`SmsConfiguration`](#smsconfiguration) |                                    |                                                                     |
-| `smsConfiguration[.phone]`   | `string` `number`                       |                                    | SMS Phone number                                                    |
-| `smsConfiguration[.message]` | `string`                                |                                    | SMS message text                                                    |
-| [ `encode` ]                 | `boolean`                               | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
-| returns                      | `string` - sms href valid string        |                                    |                                                                     |
-| throws                       | `TypeError`                             |                                    | If `phone` and `message` are both not provided                      |
+|                              | type                                      | default                            | description                                                         |
+|------------------------------|-------------------------------------------|------------------------------------|---------------------------------------------------------------------|
+| `smsConfiguration`           | [`SmsConfiguration`](#smsconfiguration)   |                                    |                                                                     |
+| `smsConfiguration[.phone]`   | `string` `number`                         |                                    | SMS Phone number                                                    |
+| `smsConfiguration[.message]` | `string`                                  |                                    | SMS message text                                                    |
+| [ `encode` ]                 | `boolean`                                 | Constructor `options.encode` value | Enable/disable message text encoding ( e.g., `encodeURIComponent` ) |
+| returns                      | `Promise<string>` - sms href valid string |                                    |                                                                     |
+| throws                       | `TypeError, reject<TypeError>`            |                                    | If `phone` and `message` are both not provided                      |
 
 **NOTES**:
 
@@ -302,7 +302,7 @@ Creates `sms:` href string from phone number and sms message text.
 Example:
 
 ```typescript
-smsHref.create({
+await smsHref.create({
     phone: 1234,
     message: 'Your message'
 });
@@ -314,7 +314,7 @@ smsHref.create({
 Example (with disabled message encoding):
 
 ```typescript
-smsHref.create({
+await smsHref.create({
     phone: 1234,
     message: 'Your message'
 }, false);
@@ -378,6 +378,7 @@ type SmsConfiguration = {
 
 ---
 **References**
+
 - https://www.rfc-editor.org/rfc/rfc5724
 - https://stackoverflow.com/a/19126326
 - 

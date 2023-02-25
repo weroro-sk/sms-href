@@ -1,20 +1,34 @@
 import "@total-typescript/ts-reset";
 
 import {ISmsHref} from "./sms-href.interface";
-import {Devices, Options, ResultCode, SmsConfiguration} from "../mixed/types";
 import {
-    ANDROID_SEPARATOR,
-    BODY, BODY_REGEX,
-    CODE_NOT_FOUND,
+    Options,
+    Devices,
+    ResultCode,
+    SmsConfiguration,
+
+    TSmsAnchor,
+    TSeparator,
+    TSmsAnchors,
+    TRejectType,
+    TResolveType,
+    TContextType,
+    TSmsHrefValue
+} from "../mixed/types";
+import {
+    PROTOCOL,
     CODE_SUCCESS,
+    CODE_NOT_FOUND,
+    PROTOCOL_REGEX,
+    MIN_IOS_VERSION,
+    BODY, BODY_REGEX,
+    ANDROID_SEPARATOR,
     CODE_UNSUPPORTED_OS,
     IOS_7_AND_LOWER_SEPARATOR,
     IOS_8_AND_HIGHER_SEPARATOR,
-    MIN_IOS_VERSION,
-    PROTOCOL,
-    PROTOCOL_REGEX,
 } from "../mixed/constants";
 import {merge} from "../mixed/helpers";
+
 
 export class SmsHref implements ISmsHref {
 
@@ -36,7 +50,7 @@ export class SmsHref implements ISmsHref {
      * @private
      * @readonly
      */
-    private readonly _separator: string | null = null;
+    private readonly _separator: TSeparator = null;
 
     /**
      * @param [options] _[optional]_ Configuration of custom separator and allowed devices.
@@ -53,28 +67,28 @@ export class SmsHref implements ISmsHref {
      *
      * @param [context] _[optional]_ - Defines parent `DOM` node for search [default - `document`]
      */
-    public fixAll(context: Element | HTMLElement | Document = document): Promise<ResultCode> {
-        return new Promise((resolve: (resultCode: (ResultCode | PromiseLike<ResultCode>)) => void, reject: (reason?: ResultCode) => void): void => {
+    public fixAll(context: TContextType = document): Promise<ResultCode> {
+        return new Promise((resolve: TResolveType, reject: TRejectType): void => {
 
             // Separator was not set
             if (!this._separator)
                 return reject(CODE_UNSUPPORTED_OS);
 
-            const elements: NodeListOf<HTMLAnchorElement> = context?.querySelectorAll(`a[href^="${PROTOCOL}"]`);
+            const elements: TSmsAnchors = context?.querySelectorAll(`a[href^="${PROTOCOL}"]`);
 
             // Anchors with sms: href doesn't exist
             if (!elements?.length)
                 return reject(CODE_NOT_FOUND);
 
-            elements.forEach((element: HTMLAnchorElement): void => {
+            elements.forEach(async (element: TSmsAnchor): Promise<void> => {
 
-                const content: string = element.href.replace(PROTOCOL_REGEX, '');
+                const content: string = element.href.replace(PROTOCOL_REGEX, '')?.trim();
 
                 // sms: content is empty
-                if (!content?.trim())
+                if (!content)
                     return;
 
-                element.href = this.fixValue(content, this._options.encode);
+                element.href = await this.fixValue(content, this._options.encode);
 
             });
 
@@ -89,7 +103,7 @@ export class SmsHref implements ISmsHref {
      * @param smsValue Input string for update
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      */
-    public fixValue(smsValue: string, encode?: boolean): string {
+    public async fixValue(smsValue: string, encode?: boolean): Promise<TSmsHrefValue> {
 
         if (typeof this._separator !== 'string' || !BODY_REGEX.test(smsValue))
             return smsValue;
@@ -113,15 +127,15 @@ export class SmsHref implements ISmsHref {
      * @param smsConfiguration
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      */
-    public create(smsConfiguration: SmsConfiguration, encode?: boolean): string {
+    public async create(smsConfiguration: SmsConfiguration, encode?: boolean): Promise<TSmsHrefValue> {
 
-        const phone: string | undefined = smsConfiguration?.phone!?.toString().trim();
+        const phone: string | undefined = smsConfiguration?.phone?.toString().trim();
         const message: string | undefined = smsConfiguration?.message?.trim();
 
         if (!phone && !message)
             throw new TypeError('Phone number or message must be provided.');
 
-        let smsValue: string = PROTOCOL;
+        let smsValue: string = '';
 
         if (!!phone)
             smsValue += phone;
@@ -216,7 +230,7 @@ export class SmsHref implements ISmsHref {
     /**
      * @private
      */
-    private _getSeparator(): string | null {
+    private _getSeparator(): TSeparator {
 
         // Custom defined separator
         if (!!this._options.separator?.trim())

@@ -1,4 +1,4 @@
-import {ResultCode, SmsConfiguration} from "../mixed/types";
+import {ResultCode, SmsConfiguration, TSmsHrefValue} from "../mixed/types";
 
 export interface ISmsHref {
 
@@ -16,7 +16,7 @@ export interface ISmsHref {
      * @param smsValue Input string for update
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      */
-    fixValue(smsValue: string, encode?: boolean): string;
+    fixValue(smsValue: string, encode?: boolean): Promise<TSmsHrefValue>;
 
     /**
      * @description Creates `sms:` href string from phone number and sms message text
@@ -24,5 +24,5 @@ export interface ISmsHref {
      * @param smsConfiguration
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      */
-    create(smsConfiguration: SmsConfiguration, encode?: boolean): string;
+    create(smsConfiguration: SmsConfiguration, encode?: boolean): Promise<TSmsHrefValue>;
 }
