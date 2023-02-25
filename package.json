@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npx tsc",
     "build:pack": "npm run build && npm pack",
-    "demo": "npx webpack --progress --mode=production",
+    "demo": "npx webpack --no-stats --mode=production",
     "clean": "rm -rf ./lib",
     "prebuild": "npm run clean",
     "predemo": "npm run build",

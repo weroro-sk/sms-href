@@ -26,7 +26,7 @@ work everywhere.</i>
 ---
 
 <p align="center">
-| <span>Webpack build size</span> | <b>1.77 KB</b> |
+| <span>Webpack build size</span> &lt; <b> 1.77 KB</b> |
 </p>
 
 ---
@@ -375,3 +375,9 @@ type SmsConfiguration = {
 ## License
 
 [MIT](LICENSE) © [Dárius Bokor](https://www.weroro.sk/)
+
+---
+**References**
+- https://www.rfc-editor.org/rfc/rfc5724
+- https://stackoverflow.com/a/19126326
+- 

@@ -1,17 +1,113 @@
 class PluginGetFileSize {
 
     /**
-     * @param {string} fileName Receive file name to get size.
-     *                          Only output file name not full path
-     * @param {{pad?: number, callback?: (fileSize: number, sizeUnits: string, fileName: string, outputPath: string, fileRelated: {sourceMap?: string}) => void}} [opt]
+     * @param {string | null} fileName
+     * @param {{pad?: number, units?:"Bytes"|"B"|"KB"|"MB"|"GB"|"TB"|"auto", callback?: (dataList: {filename: string, size: number, related: {} | undefined, units: string, dir: string}[]) => void}} [opt]
      */
     constructor(fileName, opt) {
-        this.file = fileName;
-        // Number of decimal places
-        this.pad = typeof opt?.pad !== 'number' || isNaN(opt.pad) ? 2 : Math.abs(opt.pad);
-        this.callback = opt?.callback;
+        /**
+         * @type {string|null}
+         * @private
+         * @readonly
+         */
+        this._file = fileName;
+
+        /**
+         * @description Number of decimal places
+         *
+         * @type {number|number}
+         * @private
+         * @readonly
+         */
+        this._pad = typeof opt?.pad !== 'number' || isNaN(opt.pad) ? 0 : Math.abs(opt.pad);
+
+        /**
+         * @type {function({filename: string, size: number, related: {}, units: string, dir: string}[]): void}
+         * @private
+         * @readonly
+         */
+        this._callback = opt?.callback;
+
+        /**
+         * @type {"Bytes"|"B"|"KB"|"MB"|"GB"|"TB"|"auto"}
+         * @private
+         */
+        this._units = opt?.units || 'auto';
+        if (this._units === 'B')
+            this._units = 'Bytes';
     }
 
+    /**
+     * @param {{compilation: {compiler: {outputPath: string}, assetsInfo: Map<string, {size: number, related?: {sourceMap: string} | undefined}>}}} stats
+     * @param {string} filename
+     * @returns {{filename: string, size: number, related: {}, units: string, dir: string}}
+     *
+     * @private
+     */
+    _getFileSizeData(stats, filename) {
+
+        /** @type {{size: number, related?: ({sourceMap: string}|undefined)}} */
+        const info = stats.compilation.assetsInfo.get(filename);
+
+        // Verify if file exists
+        if (!info) {
+            return {
+                size: undefined,
+                units: undefined,
+                filename: 'File ' + filename + ' not exists',
+                dir: undefined,
+                related: undefined
+            }
+        }
+
+        // Get file size
+        /** @type {number} */
+        const fileSizeInBytes = info.size;
+
+        // only used to convert
+        /** @type {string[]} */
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+        // Get size type
+        /** @type {number} */
+        const definedSizeType = sizes.indexOf(this._units);
+        /** @type {number} */
+        let sizeType;
+        if (this._units === 'auto' || definedSizeType < 0)
+            sizeType = parseInt(Math.floor(Math.log(fileSizeInBytes) / Math.log(1024)).toString());
+        else
+            sizeType = definedSizeType;
+
+        // Number of decimal places
+        /** @type {number} */
+        const decimalPlaces = Math.pow(10, this._pad);
+
+        // Get size of file using size type
+        /** @type {number} */
+        const size = Math.round((fileSizeInBytes / Math.pow(1024, sizeType)) * decimalPlaces) / decimalPlaces;
+        /** @type {string} */
+        const units = sizes[sizeType];
+        /** @type {string} */
+        const dir = stats.compilation.compiler.outputPath;
+        /** @type {{sourceMap: string}|undefined} */
+        const related = info?.related;
+
+        return {
+            // File size (number)
+            size,
+            // Size units (string)
+            units,
+            // File Name (string)
+            filename,
+            // Output dir (string)
+            dir,
+            // Related list (object)
+            related
+        }
+
+    }
+
+    // noinspection JSUnusedGlobalSymbols
     /**
      * @param {{hooks: {done:{tap: (PluginName: string, callback: (stats: {compilation: {assetsInfo: Map<string, object>, compiler: {outputPath: string}}}) => void) => void}}}} compiler
      */
@@ -20,49 +116,22 @@ class PluginGetFileSize {
             'Get File Size',
             (stats) => {
 
-                // Get output file
-                /** @type {{size: number, related: {}} | undefined} */
-                const file = stats.compilation.assetsInfo.get(this.file);
+                /** @type {{filename: string, size: number, related: {}, units: string, dir: string}[]} */
+                const dataList = [];
 
-                // Verify if file exists
-                if (!file)
-                    return console.log('\n\n', 'File', this.file, 'not exists', '\n');
+                if (!this._file?.trim()) {
+                    for (const filename of stats.compilation.assetsInfo.keys())
+                        dataList.push(this._getFileSizeData(stats, filename));
+                } else
+                    dataList.push(this._getFileSizeData(stats, this._file));
 
-                // Get file size
-                /** @type {number} */
-                const fileSizeInBytes = file.size;
+                /** @type {{filename: string, size: number, related: {}, units: string, dir: string}[]} */
+                const filteredList = dataList.filter(item => !!item);
 
-                // only used to convert
-                /** @type {string[]} */
-                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                if (typeof this._callback !== 'function')
+                    return console.log(filteredList);
 
-                // Get size type
-                /** @type {number} */
-                const sizeTypeIndex = parseInt(Math.floor(Math.log(fileSizeInBytes) / Math.log(1024)).toString());
-
-                // Number of decimal places
-                /** @type {number} */
-                const pad = Math.pow(10, this.pad);
-
-                // Get size of file using size type
-                /** @type {number} */
-                const size = Math.round((fileSizeInBytes / Math.pow(1024, sizeTypeIndex)) * pad) / pad;
-
-                if (typeof this.callback === 'function')
-                    this.callback?.(
-                        // File size (number)
-                        size,
-                        // Size units (string)
-                        sizes[sizeTypeIndex],
-                        // File Name (string)
-                        this.file,
-                        // Output path (string)
-                        stats.compilation.compiler.outputPath,
-                        // File related list (object)
-                        file.related
-                    );
-                else
-                    console.log('\n\n', this.file, 'has', size, sizes[sizeTypeIndex], '\n');
+                this._callback?.(filteredList);
             }
         );
     }

@@ -29,20 +29,28 @@ module.exports = {
     plugins: [
         new PluginGetFileSize('size_measuring.js', {
             pad: 2,
-            callback: (fileSize, sizeUnits, fileName, outputPath, fileRelated) => {
+            callback: (dataList) => {
 
                 console.log('\n\n');
-                console.table({fileName, fileSize, sizeUnits});
+                console.table(dataList);
                 console.log('\n');
 
                 // Remove file/s
-                /** @type {string} */
-                const filePath = path.resolve(outputPath, fileName);
-                if (fs.existsSync(filePath)) {
-                    fs.unlinkSync(filePath);
-                    if (fileRelated?.sourceMap)
-                        fs.unlinkSync(path.resolve(outputPath, fileRelated?.sourceMap));
-                }
+                dataList.forEach(file => {
+
+                    const {filename, dir, related} = file;
+
+                    /** @type {string} */
+                    const filePath = path.resolve(dir, filename);
+                    /** @type {string} */
+                    const sourceMap = related?.sourceMap;
+
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                        if (!!sourceMap)
+                            fs.unlinkSync(path.resolve(dir, sourceMap));
+                    }
+                });
 
             }
         }),

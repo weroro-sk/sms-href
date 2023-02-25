@@ -54,7 +54,7 @@ export class SmsHref implements ISmsHref {
      * @param [context] _[optional]_ - Defines parent `DOM` node for search [default - `document`]
      */
     public fixAll(context: Element | HTMLElement | Document = document): Promise<ResultCode> {
-        return new Promise((resolve: (resultCode: (ResultCode | PromiseLike<ResultCode>)) => void, reject: (reason?: any) => void): void => {
+        return new Promise((resolve: (resultCode: (ResultCode | PromiseLike<ResultCode>)) => void, reject: (reason?: ResultCode) => void): void => {
 
             // Separator was not set
             if (!this._separator)
