@@ -8,6 +8,11 @@ export {
     IOS_7_AND_LOWER_SEPARATOR,
     IOS_8_AND_HIGHER_SEPARATOR,
     MIN_IOS_VERSION
-} from "./mixed/constants";
+} from "./contants/public.constants";
 
-export type {ResultCode, Options} from "./mixed/types";
+export type {
+    ResultCode,
+    Options,
+    Devices,
+    SmsConfiguration
+} from "./types/public.types";

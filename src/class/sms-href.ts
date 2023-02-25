@@ -1,10 +1,11 @@
 import {ISmsHref} from "./sms-href.interface";
 import {
     Options,
-    Devices,
     ResultCode,
-    SmsConfiguration,
-
+    Devices,
+    SmsConfiguration
+} from "../types/public.types";
+import {
     TSmsAnchor,
     TSeparator,
     TSmsAnchors,
@@ -12,20 +13,22 @@ import {
     TResolveType,
     TContextType,
     TSmsHrefValue
-} from "../mixed/types";
+} from "../types/private.types";
 import {
-    PROTOCOL,
     CODE_SUCCESS,
     CODE_NOT_FOUND,
-    PROTOCOL_REGEX,
     MIN_IOS_VERSION,
-    BODY, BODY_REGEX,
     ANDROID_SEPARATOR,
     CODE_UNSUPPORTED_OS,
     IOS_7_AND_LOWER_SEPARATOR,
     IOS_8_AND_HIGHER_SEPARATOR,
-} from "../mixed/constants";
-import {merge} from "../mixed/helpers";
+} from "../contants/public.constants";
+import {
+    PROTOCOL,
+    PROTOCOL_REGEX,
+    BODY, BODY_REGEX,
+} from "../contants/private.contants";
+import {merge} from "../helpers/helpers";
 
 
 export class SmsHref implements ISmsHref {

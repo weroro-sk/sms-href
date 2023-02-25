@@ -1,5 +1,5 @@
 /** SMS HREF CONSTANTS */
-import {ResultCode} from "./types";
+import {ResultCode} from "../types/public.types";
 
 ///////////
 // RESULT CODES
@@ -59,12 +59,4 @@ export const IOS_8_AND_HIGHER_SEPARATOR: string = '&';
  */
 export const MIN_IOS_VERSION: number = 7;
 
-///////////
-// PROTOCOL CONSTANTS
-///////////
-
-export const PROTOCOL: string = 'sms:';
-export const PROTOCOL_REGEX: RegExp = /^sms:/i;
-export const BODY: string = 'body=';
-export const BODY_REGEX: RegExp = /.body=/i;
 

@@ -1,4 +1,5 @@
-import {ResultCode, SmsConfiguration, TSmsHrefValue} from "../mixed/types";
+import {ResultCode, SmsConfiguration} from "../types/public.types";
+import {TSmsHrefValue} from "../types/private.types";
 
 export interface ISmsHref {
 
