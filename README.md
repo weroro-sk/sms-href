@@ -49,7 +49,7 @@
 ---
 
 - [Installation](#installation)
-- [Usage](#basic-usage)
+- [Usage](#basic-usage-without-catching-outputs)
 - [API](#api)
     - [Instance](#instance)
         - [Custom separator](#custom-separator-definition)
