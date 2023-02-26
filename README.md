@@ -1,9 +1,11 @@
 <p align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="sms_href_logo.png">
-      <img src="sms_href_logo.png" alt="SMS Href">
+      <source media="(prefers-color-scheme: dark)" srcset="sms-href__logo.svg">
+      <img src="sms-href__logo.svg" alt="SMS Href" height="200px">
     </picture>
 </p>
+
+<h1 align="center">SMS Href</h1>
 
 <p align="center">
 SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.
@@ -397,5 +399,6 @@ type SmsConfiguration = {
 ---
 **References**
 
-- https://www.rfc-editor.org/rfc/rfc5724#section-2
+- [The "sms" URI Scheme](https://www.rfc-editor.org/rfc/rfc5724#section-2)
+- [Apple IOS - SMS Links](https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/SMSLinks/SMSLinks.html)
 - https://stackoverflow.com/a/19126326
