@@ -1,40 +1,37 @@
 <p align="center">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="sms-href__logo.svg">
-      <img src="sms-href__logo.svg" alt="SMS Href" height="200px">
-    </picture>
+  <img src="sms-href__logo.svg" alt="SMS Href" height="200px">
 </p>
 
 <h1 align="center">SMS Href</h1>
 
 <p align="center">
-SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.
+  SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.
 </p>
 
 ---
 
 <p align="center">
 
-<a href="https://www.npmjs.com/package/sms-href" target="_blank" title="Latest NPM version">
-<img alt="NPM version" src="https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm">
-</a>
+  <a href="https://www.npmjs.com/package/sms-href" target="_blank" title="Latest NPM version">
+    <img alt="NPM version" src="https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm">
+  </a>
 
-<a href="https://github.com/weroro-sk/sms-href" target="_blank" title="Latest package.json version on GitHub">
-<img alt="GitHub version" src="https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github">
-</a>
+  <a href="https://github.com/weroro-sk/sms-href" target="_blank" title="Latest package.json version on GitHub">
+    <img alt="GitHub version" src="https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github">
+  </a>
 
-<a href="https://github.com/weroro-sk/sms-href/releases" target="_blank">
-<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/weroro-sk/sms-href?label=github%20release&style=flat-square&logo=github">
-</a>
+  <a href="https://github.com/weroro-sk/sms-href/releases" target="_blank">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/weroro-sk/sms-href?label=github%20release&style=flat-square&logo=github">
+  </a>
 
 </p>
 
 ---
 
 <p align="center">
-<a href="https://weroro-sk.github.io/sms-href/demo/" target="_blank" title="Try out SMS Href on your mobile device">
-<img alt="demo" src="https://img.shields.io/badge/Try_SMS_Href-Live_demo-green?style=for-the-badge&logo=github">
-</a>
+  <a href="https://weroro-sk.github.io/sms-href/demo/" target="_blank" title="Try out SMS Href on your mobile device">
+    <img alt="demo" src="https://img.shields.io/badge/Try_SMS_Href-Live_demo-green?style=for-the-badge&logo=github">
+  </a>
 </p>
 
 ---
@@ -46,7 +43,7 @@ SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates a
 ---
 
 <p align="center">
-<img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.79_kB-orange?style=flat-square&logo=webpack">
+  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.79_kB-orange?style=flat-square&logo=webpack">
 </p>
 
 ---
@@ -71,9 +68,13 @@ SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates a
 
 ## Installation
 
-`npm install sms-href`
+| Manager                                                                                                                                                                        | Command                |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg">                                                                                      | `npm install sms-href` |
+| <img width="60px" src="https://raw.githubusercontent.com/yarnpkg/assets/76d30ca2aebed5b73ea8131d972218fb860bd32d/yarn-kitten-full.svg">                                        | `yarn add sms-href`    |
+| <img width="60px" src="https://d33wubrfki0l68.cloudfront.net/aad219b6c931cebb53121dcda794f6180d9e4397/17f34/assets/images/pnpm-standard-79c9dbb2e99b8525ae55174580061e1b.svg"> | `pnpm add sms-href`    |
 
-## DEV runners
+## <img height="20px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg"> DEV runners
 
 | runner               | output                                  | description                               |
 |----------------------|-----------------------------------------|-------------------------------------------|
