@@ -21,12 +21,13 @@ import {
     ANDROID_SEPARATOR,
     CODE_UNSUPPORTED_OS,
     IOS_7_AND_LOWER_SEPARATOR,
-    IOS_8_AND_HIGHER_SEPARATOR,
+    IOS_8_AND_HIGHER_SEPARATOR
 } from "../contants/public.constants";
 import {
     PROTOCOL,
     PROTOCOL_REGEX,
-    BODY, BODY_REGEX,
+    BODY,
+    BODY_REGEX
 } from "../contants/private.contants";
 import {merge} from "../helpers";
 
@@ -111,6 +112,7 @@ export class SmsHref implements ISmsHref {
      */
     public async fixValue(smsValue: string, encode?: boolean): Promise<TSmsHrefValue> {
 
+        // If the sms value doesn't contain body= we don't need to fix it.
         if (typeof this._separator !== 'string' || !BODY_REGEX.test(smsValue))
             return smsValue;
 
@@ -128,7 +130,7 @@ export class SmsHref implements ISmsHref {
     }
 
     /**
-     * @description Creates `sms:` href string from phone number and sms message text
+     * @description Creates an `sms:` href string from the phone number and text of the sms message
      *
      * @param smsConfiguration
      * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
@@ -144,6 +146,8 @@ export class SmsHref implements ISmsHref {
         if (!phone && !message)
             throw new TypeError('Phone number or message must be provided.');
 
+        // We don't need the predefined sms: protocol
+        // because it will be embedded in the fixValue() method.
         let smsValue: string = '';
 
         if (!!phone)

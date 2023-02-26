@@ -6,27 +6,45 @@
 </p>
 
 <p align="center">
-SMS Href generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or
-defined DOM context.
+SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.
 </p>
 
 ---
 
 <p align="center">
-  <a href="https://weroro-sk.github.io/sms-href/demo/">Live demo</a>
+
+<a href="https://www.npmjs.com/package/sms-href" target="_blank" title="Latest NPM version">
+<img alt="NPM version" src="https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm">
+</a>
+
+<a href="https://github.com/weroro-sk/sms-href" target="_blank" title="Latest package.json version on GitHub">
+<img alt="GitHub version" src="https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github">
+</a>
+
+<a href="https://github.com/weroro-sk/sms-href/releases" target="_blank">
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/weroro-sk/sms-href?label=github%20release&style=flat-square&logo=github">
+</a>
+
 </p>
 
 ---
 
 <p align="center">
-  <i>You can avoid this library and use the universal <code>;?&</code> separator <code>sms:1234;?&body=Your%20message</code>, but this is not 
-work everywhere.</i>
+<a href="https://weroro-sk.github.io/sms-href/demo/" target="_blank" title="Try out SMS Href on your mobile device">
+<img alt="demo" src="https://img.shields.io/badge/Try_SMS_Href-Live_demo-green?style=for-the-badge&logo=github">
+</a>
 </p>
 
 ---
 
 <p align="center">
-| Webpack + Terser build size &lt; <b> 1.79 KiB</b> [minimized] |
+  <i>You can avoid this library and use the universal separator<br><code>;?&</code> (all three characters in that order),<br> but it doesn't work everywhere.</i>
+</p>
+
+---
+
+<p align="center">
+<img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.79_kB-orange?style=flat-square&logo=webpack">
 </p>
 
 ---
@@ -379,6 +397,5 @@ type SmsConfiguration = {
 ---
 **References**
 
-- https://www.rfc-editor.org/rfc/rfc5724
+- https://www.rfc-editor.org/rfc/rfc5724#section-2
 - https://stackoverflow.com/a/19126326
-- 

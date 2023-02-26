@@ -1,7 +1,7 @@
 {
   "name": "sms-href",
   "version": "1.1.0",
-  "description": "Generates an SMS protocol link, updates an exist SMS protocol string or updates all SMS protocol links on webpage or defined DOM context.",
+  "description": "SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.",
   "author": "Dárius Bokor - WERORO.sk",
   "license": "MIT",
   "main": "lib/index.js",
