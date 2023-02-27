@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="sms-href__logo.svg" alt="SMS Href" height="200px">
+  <img src="sms-href_logo.svg" alt="SMS Href" height="200px">
 </p>
 
 <h1 align="center">SMS Href</h1>

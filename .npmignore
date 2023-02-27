@@ -3,7 +3,7 @@
 node_modules/
 src/
 demo/
-_resources/
+assets/
 package-json.lock
 .npmrc
 webpack.config.js
