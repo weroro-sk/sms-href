@@ -68,13 +68,13 @@
 
 ## Installation
 
-| Manager                                                                                                                                                                        | Command                |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
-| <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg">                                                                                      | `npm install sms-href` |
-| <img width="60px" src="https://raw.githubusercontent.com/yarnpkg/assets/76d30ca2aebed5b73ea8131d972218fb860bd32d/yarn-kitten-full.svg">                                        | `yarn add sms-href`    |
-| <img width="60px" src="https://d33wubrfki0l68.cloudfront.net/aad219b6c931cebb53121dcda794f6180d9e4397/17f34/assets/images/pnpm-standard-79c9dbb2e99b8525ae55174580061e1b.svg"> | `pnpm add sms-href`    |
+| Manager                                                                                                                                                                                   | Command                |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg" alt="NPM">                                                                                       | `npm install sms-href` |
+| <img width="60px" src="https://raw.githubusercontent.com/yarnpkg/assets/76d30ca2aebed5b73ea8131d972218fb860bd32d/yarn-kitten-full.svg" alt="YARN">                                        | `yarn add sms-href`    |
+| <img width="60px" src="https://d33wubrfki0l68.cloudfront.net/aad219b6c931cebb53121dcda794f6180d9e4397/17f34/assets/images/pnpm-standard-79c9dbb2e99b8525ae55174580061e1b.svg" alt="PNPM"> | `pnpm add sms-href`    |
 
-## <img height="20px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg"> DEV runners
+## <img height="20px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg" alt="NPM"> DEV runners
 
 | runner               | output                                  | description                               |
 |----------------------|-----------------------------------------|-------------------------------------------|
@@ -402,4 +402,5 @@ type SmsConfiguration = {
 
 - [The "sms" URI Scheme](https://www.rfc-editor.org/rfc/rfc5724#section-2)
 - [Apple IOS - SMS Links](https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/SMSLinks/SMSLinks.html)
-- https://stackoverflow.com/a/19126326
+- [stackoverflow -> 58131833](https://stackoverflow.com/a/58131833/2276415)
+- [stackoverflow -> 19126326](https://stackoverflow.com/a/19126326/2276415)
