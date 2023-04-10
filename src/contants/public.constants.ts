@@ -1,5 +1,6 @@
 /** SMS HREF CONSTANTS */
 import {ResultCode} from "../types/public.types";
+import {AMPERSAND, QUESTION_MARK, SEMICOLON} from "./private.contants";
 
 ///////////
 // RESULT CODES
@@ -30,7 +31,7 @@ export const CODE_UNSUPPORTED_OS: ResultCode = 501;
  *
  * @default ?
  */
-export const ANDROID_SEPARATOR: string = '?';
+export const ANDROID_SEPARATOR: string = QUESTION_MARK;
 
 /**
  * @description Body separator for IOS platform version 7 and lower
@@ -38,7 +39,7 @@ export const ANDROID_SEPARATOR: string = '?';
  *
  * @default ;
  */
-export const IOS_7_AND_LOWER_SEPARATOR: string = ';';
+export const IOS_7_AND_LOWER_SEPARATOR: string = SEMICOLON;
 
 /**
  * @description Body separator for IOS platform version 8 and higher
@@ -46,7 +47,7 @@ export const IOS_7_AND_LOWER_SEPARATOR: string = ';';
  *
  * @default &
  */
-export const IOS_8_AND_HIGHER_SEPARATOR: string = '&';
+export const IOS_8_AND_HIGHER_SEPARATOR: string = AMPERSAND;
 
 ///////////
 // IOS MIN VERSION

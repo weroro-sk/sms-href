@@ -1,36 +1,20 @@
 import {ISmsHref} from "./sms-href.interface";
+import {merge} from "../helpers";
+import {Options, ResultCode, Devices, SmsConfiguration} from "../types/public.types";
 import {
-    Options,
-    ResultCode,
-    Devices,
-    SmsConfiguration
-} from "../types/public.types";
-import {
-    TSmsAnchor,
-    TSeparator,
-    TSmsAnchors,
-    TRejectType,
-    TResolveType,
-    TContextType,
-    TSmsHrefValue
+    TRejectType, TResolveType, TContextType,
+    TSmsAnchor, TSmsAnchors, TSmsHrefValue, TSeparator
 } from "../types/private.types";
 import {
-    CODE_SUCCESS,
-    CODE_NOT_FOUND,
-    MIN_IOS_VERSION,
-    ANDROID_SEPARATOR,
-    CODE_UNSUPPORTED_OS,
-    IOS_7_AND_LOWER_SEPARATOR,
-    IOS_8_AND_HIGHER_SEPARATOR
-} from "../contants/public.constants";
-import {
-    PROTOCOL,
-    PROTOCOL_REGEX,
-    BODY,
-    BODY_REGEX
+    PROTOCOL, PROTOCOL_REGEX,
+    BODY, BODY_REGEX,
+    AMPERSAND, EMPTY, UNDERSCORE
 } from "../contants/private.contants";
-import {merge} from "../helpers";
-
+import {
+    MIN_IOS_VERSION,
+    CODE_SUCCESS, CODE_NOT_FOUND, CODE_UNSUPPORTED_OS,
+    ANDROID_SEPARATOR, IOS_7_AND_LOWER_SEPARATOR, IOS_8_AND_HIGHER_SEPARATOR
+} from "../contants/public.constants";
 
 export class SmsHref implements ISmsHref {
 
@@ -59,7 +43,7 @@ export class SmsHref implements ISmsHref {
      *                  Read documentation for more information.
      */
     public constructor(options?: Options) {
-        merge(this._options, options);
+        merge(this._options, options as object);
         this._separator = this._getSeparator();
     }
 
@@ -87,7 +71,7 @@ export class SmsHref implements ISmsHref {
 
             elements.forEach(async (element: TSmsAnchor): Promise<void> => {
 
-                const content: string = element.href.replace(PROTOCOL_REGEX, '')?.trim();
+                const content: string = element.href.replace(PROTOCOL_REGEX, EMPTY)?.trim();
 
                 // sms: content is empty
                 if (!content)
@@ -122,10 +106,10 @@ export class SmsHref implements ISmsHref {
         if (encode)
             smsValue = this._encode(smsValue);
 
-        const protocol: string = PROTOCOL_REGEX.test(smsValue) ? '' : PROTOCOL;
+        const protocol: string = PROTOCOL_REGEX.test(smsValue) ? EMPTY : PROTOCOL;
 
         return protocol + smsValue
-            ?.replace(/&amp;/gi, '&')
+            ?.replace(/&amp;/gi, AMPERSAND)
             .replace(BODY_REGEX, this._separator + BODY);
     }
 
@@ -148,7 +132,7 @@ export class SmsHref implements ISmsHref {
 
         // We don't need the predefined sms: protocol
         // because it will be embedded in the fixValue() method.
-        let smsValue: string = '';
+        let smsValue: string = EMPTY;
 
         if (!!phone)
             smsValue += phone;
@@ -170,8 +154,8 @@ export class SmsHref implements ISmsHref {
         const version: string | undefined = UA
             .match(/CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i)?.[1]
             ?.replace('undefined', '3_2')
-            .replace('_', '.')
-            .replace('_', '');
+            .replace(UNDERSCORE, '.')
+            .replace(UNDERSCORE, EMPTY);
 
         if (!version || isNaN(+version))
             return -1;
@@ -264,7 +248,9 @@ export class SmsHref implements ISmsHref {
 
         const ios: number = this._isIOS(UA);
         if (ios > 0)
-            return ios <= MIN_IOS_VERSION ? IOS_7_AND_LOWER_SEPARATOR : IOS_8_AND_HIGHER_SEPARATOR;
+            return ios <= MIN_IOS_VERSION
+                ? IOS_7_AND_LOWER_SEPARATOR
+                : IOS_8_AND_HIGHER_SEPARATOR;
 
         return null;
     }

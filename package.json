@@ -1,6 +1,6 @@
 {
   "name": "sms-href",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.",
   "author": "Dárius Bokor - WERORO.sk",
   "license": "MIT",
@@ -40,11 +40,11 @@
     "weroro"
   ],
   "devDependencies": {
-    "@types/node": "^18.14.1",
-    "terser-webpack-plugin": "^5.3.6",
+    "@types/node": "^18.15.11",
+    "terser-webpack-plugin": "^5.3.7",
     "tslib": "^2.5.0",
-    "typescript": "^4.9.5",
-    "webpack": "^5.75.0",
+    "typescript": "^5.0.4",
+    "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1"
   }
 }

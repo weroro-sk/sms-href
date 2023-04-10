@@ -3,8 +3,8 @@
  *
  * @param value
  */
-export const isObject = (value: any): boolean => {
-    return typeof value !== null && typeof value === 'object'
+export const isObject = <T>(value: T): value is T => {
+    return typeof value === 'object' && value !== null;
 }
 
 /**
@@ -13,15 +13,15 @@ export const isObject = (value: any): boolean => {
  * @param target Will be updated
  * @param source Object with update data
  */
-export const merge = (target: any, source: any): void => {
+export const merge = (target: object | Array<unknown>, source: object | Array<unknown>): void => {
     if (!isObject(target) || !isObject(source))
         return;
 
-    for (const key in source) {
-        const value: any = source[key];
+    for (let key in source) {
+        const value: any = Reflect.get(source, key);
         if (isObject(value))
-            merge(target[key], value);
+            merge(Reflect.get(target, key), value);
         else
-            target[key] = value;
+            Reflect.set(target, key, value);
     }
 }
