@@ -43,7 +43,7 @@
 ---
 
 <p align="center">
-  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.79_kB-orange?style=flat-square&logo=webpack">
+  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.82_kB-orange?style=flat-square&logo=webpack">
 </p>
 
 ---
