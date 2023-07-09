@@ -1,4 +1,4 @@
-export {SmsHref} from "./class/sms-href";
+export {SmsHref} from "./files/sms-href";
 
 export {
     CODE_SUCCESS,

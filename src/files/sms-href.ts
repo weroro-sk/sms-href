@@ -1,5 +1,5 @@
-import {ISmsHref} from "./sms-href.interface";
-import {merge} from "../helpers";
+import {ISmsHref} from "../types/sms-href.interface";
+import {objectExtend} from "../helpers";
 import {Options, ResultCode, Devices, SmsConfiguration} from "../types/public.types";
 import {
     TRejectType, TResolveType, TContextType,
@@ -43,7 +43,7 @@ export class SmsHref implements ISmsHref {
      *                  Read documentation for more information.
      */
     public constructor(options?: Options) {
-        merge(this._options, options as object);
+        objectExtend(this._options, options as object);
         this._separator = this._getSeparator();
     }
 
@@ -51,7 +51,7 @@ export class SmsHref implements ISmsHref {
      * @description Finds and update all anchor links with `sms:` protocol value
      *              by current platform in set `DOM` context.
      *
-     * @param [context] _[optional]_ - Defines parent `DOM` node for search [default - `document`]
+     * @param [context=document] Defines parent `DOM` node for search [default - `document`]
      *
      * @returns - Promise<ResultCode>
      * @throws - Promise.catch<ResultCode>
@@ -90,7 +90,7 @@ export class SmsHref implements ISmsHref {
      * @description Update input string value by current platform.
      *
      * @param smsValue Input string for update
-     * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     * @param [encode=false] Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      *
      * @returns Valid SMS Href `sms:`anchor string
      */
@@ -110,14 +110,15 @@ export class SmsHref implements ISmsHref {
 
         return protocol + smsValue
             ?.replace(/&amp;/gi, AMPERSAND)
-            .replace(BODY_REGEX, this._separator + BODY);
+            ?.replace(BODY_REGEX, this._separator + BODY);
     }
 
     /**
      * @description Creates an `sms:` href string from the phone number and text of the sms message
      *
-     * @param smsConfiguration
-     * @param [encode] _[optional]_ - Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
+     * @param smsConfiguration  The Sms Href message configuration object that contains
+     *                          the phone number and the sms message. `{phone: 1234, message: 'sms message'}`
+     * @param [encode=false] Enable/Disable message text encoding ( e.g., `encodeURIComponent` )
      *
      * @returns Valid SMS Href `sms:`anchor string
      * @throws - Promise.reject<TypeError> - If `phone` and `message` are both not provided

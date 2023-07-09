@@ -43,7 +43,7 @@
 ---
 
 <p align="center">
-  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.82_kB-orange?style=flat-square&logo=webpack">
+  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.81_kB-orange?style=flat-square&logo=webpack">
 </p>
 
 ---
@@ -100,15 +100,16 @@ try {
 
 ```
 
-| Tested platforms         |
-|--------------------------|
-| Android 10 (Quince Tart) |
-| Android 12 (Snow Cone)   |
-| iOS 6                    |
-| iOS 8                    |
-| iOS 12                   |
-| iOS 15 / iPadOS 15       |
-| iOS 16 / iPadOS 16       |
+## Tested platforms
+
+| Android          | iOS       | iPadOS    |
+|------------------|-----------|-----------|
+| 10 (Quince Tart) | 6         | 6         |
+| 12 (Snow Cone)   | 8         | 8         |
+| 13 (Tiramisu)    | 12        | 12        |
+|                  | 15        | 15        |
+|                  | 16        | 16        |
+|                  | 17 (beta) | 17 (beta) |
 
 ---
 
