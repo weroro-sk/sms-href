@@ -1,4 +1,4 @@
-# <img src="sms-href_logo.svg" alt="SMS Href" height="50px"/> <span style="display:inline-block;line-height:54px;vertical-align:top">SMS Href</span>
+# <img src="sms-href_logo.svg" alt="SMS Href" style="height:1.27em;vertical-align:top;" /> <span>SMS Href</span>
 
 SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs
 on a web page or in a defined DOM context.
@@ -6,13 +6,15 @@ on a web page or in a defined DOM context.
 [![Latest NPM version](https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm)](https://www.npmjs.com/package/sms-href)
 [![Latest GIT version](https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github)](https://github.com/weroro-sk/sms-href)
 
+> 💡 **Tip:** You can avoid this library and use the universal separator `;?&` (_all three characters in that order_),
+> but it doesn't work everywhere.
+
 |                                              |                                      |                                                            |
 |----------------------------------------------|--------------------------------------|------------------------------------------------------------|
 | Minified & GZIP-ed build size: **660 Bytes** | 💻 **[Installation](#installation)** | ✨ **[Basic usage](#basic-usage-without-catching-outputs)** |
 
 
-> 💡 **Tip:** You can avoid this library and use the universal separator `;?&` (_all three characters in that order_),
-> but it doesn't work everywhere.
+
 
 ---
 
