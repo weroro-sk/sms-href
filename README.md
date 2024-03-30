@@ -1,4 +1,7 @@
-# <img src="sms-href_logo.svg" alt="SMS Href" style="height:1.27em;vertical-align:top;" /> <span>SMS Href</span>
+<h1>
+    <img src="sms-href_logo.svg" alt="SMS Href" style="height:1.27em;vertical-align:top;" />
+    SMS Href
+</h1>
 
 SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs
 on a web page or in a defined DOM context.
