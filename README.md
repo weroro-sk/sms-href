@@ -1,62 +1,39 @@
-<p align="center">
-  <img src="sms-href_logo.svg" alt="SMS Href" height="200px">
-</p>
+# <img src="sms-href_logo.svg" alt="SMS Href" height="50px"/> <span style="display:inline-block;line-height:54px;vertical-align:top">SMS Href</span>
 
-<h1 align="center">SMS Href</h1>
+SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs
+on a web page or in a defined DOM context.
 
-<p align="center">
-  SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.
-</p>
+[![Latest NPM version](https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm)](https://www.npmjs.com/package/sms-href)
+[![Latest GIT version](https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github)](https://github.com/weroro-sk/sms-href)
 
----
+|                                              |                                      |                                                            |
+|----------------------------------------------|--------------------------------------|------------------------------------------------------------|
+| Minified & GZIP-ed build size: **660 Bytes** | 💻 **[Installation](#installation)** | ✨ **[Basic usage](#basic-usage-without-catching-outputs)** |
 
-<p align="center">
 
-  <a href="https://www.npmjs.com/package/sms-href" target="_blank" title="Latest NPM version">
-    <img alt="NPM version" src="https://img.shields.io/npm/v/sms-href?label=npm%20version&style=flat-square&logo=npm">
-  </a>
-
-  <a href="https://github.com/weroro-sk/sms-href" target="_blank" title="Latest package.json version on GitHub">
-    <img alt="GitHub version" src="https://img.shields.io/github/package-json/version/weroro-sk/sms-href/main?label=github%20version&style=flat-square&logo=github">
-  </a>
-
-  <a href="https://github.com/weroro-sk/sms-href/releases" target="_blank">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/weroro-sk/sms-href?label=github%20release&style=flat-square&logo=github">
-  </a>
-
-</p>
+> 💡 **Tip:** You can avoid this library and use the universal separator `;?&` (_all three characters in that order_),
+> but it doesn't work everywhere.
 
 ---
 
-<p align="center">
-  <a href="https://weroro-sk.github.io/sms-href/demo/" target="_blank" title="Try out SMS Href on your mobile device">
-    <img alt="demo" src="https://img.shields.io/badge/Try_SMS_Href-Live_demo-green?style=for-the-badge&logo=github">
-  </a>
-</p>
+[![Live demo](https://img.shields.io/badge/Try_SMS_Href-Live_demo-fe7d37?style=for-the-badge&logo=github)](https://weroro-sk.github.io/sms-href/demo/)
 
 ---
 
-<p align="center">
-  <i>You can avoid this library and use the universal separator<br><code>;?&</code> (all three characters in that order),<br> but it doesn't work everywhere.</i>
-</p>
+### Table of Contents
 
----
-
-<p align="center">
-  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.81_kB-orange?style=flat-square&logo=webpack">
-</p>
-
----
-
-- [Installation](#installation)
-- [Usage](#basic-usage-without-catching-outputs)
-- [API](#api)
-    - [Instance](#instance)
+- **API**
+  - [Instance](#instance)
+      - [Constructor options](#)
         - [Custom separator](#custom-separator-definition)
-    - [fixAll](#fixall)
-    - [fixValue](#fixvalue)
-    - [create](#create)
-- [Types](#types)
+        - [Except](#)
+        - [Transform phone number](#)
+        - [Encode message](#)
+  - [fixAll](#fixall)
+  - [fixValue](#fixvalue)
+  - [create](#create)
+
+- **Types**
     - [ResultCode](#resultcode)
     - [Options](#options)
     - [Devices](#devices)
@@ -64,24 +41,16 @@
 
 ---
 
+> ### Installation
+> 
+> |           |                     |
+> |-----------|---------------------|
+> | **NPM:**  | `npm add sms-href`  |
+> | **YARN:** | `yarn add sms-href` |
+> | **PNPM:** | `pnpm add sms-href` |
+> | **BUN:**  | `bun add sms-href`  |
+
 ---
-
-## Installation
-
-| Manager                                                                                                                                                                                   | Command                |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------|
-| <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg" alt="NPM">                                                                                       | `npm install sms-href` |
-| <img width="60px" src="https://raw.githubusercontent.com/yarnpkg/assets/76d30ca2aebed5b73ea8131d972218fb860bd32d/yarn-kitten-full.svg" alt="YARN">                                        | `yarn add sms-href`    |
-| <img width="60px" src="https://d33wubrfki0l68.cloudfront.net/aad219b6c931cebb53121dcda794f6180d9e4397/17f34/assets/images/pnpm-standard-79c9dbb2e99b8525ae55174580061e1b.svg" alt="PNPM"> | `pnpm add sms-href`    |
-| <img width="60px" src="https://bun.sh/logo.svg" alt="BUN">                                                                                                                                | `bun add sms-href`     |
-
-## <img height="20px" src="https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg" alt="NPM"> DEV runners
-
-| runner               | output                                  | description                               |
-|----------------------|-----------------------------------------|-------------------------------------------|
-| `npm run build`      | `./lib/**/*`                            | Transpile from Typescript to Javascript   |
-| `npm run build:pack` | `./sms-href-{package-json-version}.tgz` | Create NPM package file (`*.tgz`)         |
-| `npm run demo`       | `./demo/dist/demo.js`                   | Build demo and measure minimal build size |
 
 ## Basic usage (without catching outputs)
 
@@ -101,20 +70,20 @@ try {
 
 ```
 
-## Tested platforms
+### 📲 Tested platforms
 
-| Android          | iOS       | iPadOS    |
-|------------------|-----------|-----------|
-| 10 (Quince Tart) | 6         | 6         |
-| 12 (Snow Cone)   | 8         | 8         |
-| 13 (Tiramisu)    | 12        | 12        |
-|                  | 15        | 15        |
-|                  | 16        | 16        |
-|                  | 17 (beta) | 17 (beta) |
+| Android                    | iOS | iPadOS |
+|----------------------------|-----|--------|
+| 10 (Quince Tart)           | 6   | 6      |
+| 12 (Snow Cone)             | 8   | 8      |
+| 13 (Tiramisu)              | 12  | 12     |
+| 14 (Upside Down Cake)      | 15  | 15     |
+| 15 DP2 (Vanilla Ice Cream) | 16  | 16     |
+|                            | 17  | 17     |
 
 ---
 
-## API
+> ## API
 
 ### Instance
 
@@ -352,7 +321,7 @@ await smsHref.create({
 
 ---
 
-## Types
+> ## Types
 
 ### ResultCode
 

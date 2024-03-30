@@ -1,6 +1,6 @@
 {
   "name": "sms-href",
-  "version": "1.1.3",
+  "version": "2.0.0",
   "description": "SMS Href creates SMS URL strings, updates existing SMS URL strings, or updates all href attributes containing SMS URLs on a web page or in a defined DOM context.",
   "author": "Dárius Bokor - WERORO.sk",
   "license": "MIT",
