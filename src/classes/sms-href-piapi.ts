@@ -1,75 +1,30 @@
-import {isAndroid, isIOS} from "./new-app-detectors";
-
-export const translateMessages = (code: number): string => new Map([
-    [1, 'This function is not available in Node.js environment'],
-    [2, 'No SMS hrefs found'],
-    [3, 'SMS hrefs fixed'],
-    [4, 'Separator is not defined.'],
-]).get(code) || 'Unknown message';
+import {isAndroid, isIOS} from "../detectors";
+import {
+    SEPARATOR_ANDROID,
+    SEPARATOR_IOS,
+    SEPARATOR_IOS_7, STATUS_IS_NODE_JS,
+    STATUS_NO_SMS_HREFS, STATUS_SEPARATOR_NOT_DEFINED,
+    STATUS_SMS_HREFS_FIXED
+} from "../contants";
+import {ISmsHref_PIAPI} from "./sms-href-piapi.interface";
+// types
+import {Constructor, Message, TContext} from "./types";
+import TSeparator = Message.TSeparator;
+import TMiddlewareFunction = Constructor.TMiddlewareFunction;
+import TOptions = Constructor.TOptions;
+import TSmsHrefValue = Message.TSmsHrefValue;
+import TPhone = Message.TPhone;
+import TMessage = Message.TMessage;
+import TSegments = Message.TSegments;
 
 
 const replace = (str: string, searchValue: string | RegExp, replaceValue: string = ''): string =>
     str?.replace(searchValue, replaceValue);
 
 /**
- * Separator used in generating SMS hrefs for different platforms.
- */
-export const SEPARATOR_ANDROID = '?';
-export const SEPARATOR_IOS = '&';
-export const SEPARATOR_IOS_7 = ';';
-
-type TPhone = string;
-type TMessage = string;
-type TSegments = {
-    _phone: TPhone;
-    _message: TMessage;
-};
-type TSeparator = typeof SEPARATOR_ANDROID | typeof SEPARATOR_IOS | typeof SEPARATOR_IOS_7;
-type TMiddlewareFunction = (value: string) => string;
-
-type TOptions = {
-    /**
-     * Array of booleans indicating whether to exclude particular options.
-     */
-    except?: boolean[];
-
-    /**
-     * Separator to be used in the SMS href.
-     */
-    separator?: TSeparator;
-
-    /**
-     * Boolean indicating whether to encode the generated href.
-     */
-    encode?: boolean;
-
-    /**
-     * Middleware function to transform phone number value.
-     */
-    phoneMiddleware?: TMiddlewareFunction;
-
-    /**
-     * Middleware function to transform message value.
-     */
-    messageMiddleware?: TMiddlewareFunction;
-    textEncoder?: TMiddlewareFunction;
-};
-
-type TContext = Document | Element | HTMLElement | DocumentFragment;
-
-
-/**
- * Possible values for generating SMS hrefs.
- */
-type TSmsHrefValue =
-    | `sms:${TPhone}`
-    | `sms:${TSeparator}body=${TMessage}`
-    | `sms:${TPhone}${TSeparator}body=${TMessage}`;
-
-/**
  * Class representing a utility for generating and fixing SMS hrefs.
  */
-export class SmsHref_PIAPI {
+export class SmsHref_PIAPI implements ISmsHref_PIAPI {
 
     /**
      * Separator to be used in SMS hrefs.
@@ -92,6 +47,11 @@ export class SmsHref_PIAPI {
      */
     private readonly _messageMiddleware: (value: string) => string;
 
+    /**
+     *
+     * @private
+     * @readonly
+     */
     private readonly _textEncoder: (value: string, decode?: 0 | 1) => string;
 
     /**
@@ -128,20 +88,24 @@ export class SmsHref_PIAPI {
      * @example
      * await smsHrefInstance.__fixAll(document.body); // Example fixing all SMS hrefs within the document body
      */
-    public async __fixAll(context?: TContext, shouldBypassNodeJs?: boolean): Promise<boolean> {
+    public async __fixAll(context?: TContext, shouldBypassNodeJs?: boolean): Promise<number> {
 
         let anchor: HTMLAnchorElement;
         let anchors: NodeListOf<HTMLAnchorElement>;
 
-        if (
-            // Check if not running in Node.js or bypass flag is not set
-            typeof global !== 'undefined' && !shouldBypassNodeJs ||
-            // Check if separator is not defined
-            !this._separator ||
-            // Check if no anchor elements with SMS hrefs are found in the given context.
-            !(anchors = (context || document).querySelectorAll('a[href^="sms:"]')).length
-        ) {
-            return false;
+        // Check if not running in Node.js or bypass flag is not set
+        if (typeof global !== 'undefined' && !shouldBypassNodeJs) {
+            return STATUS_IS_NODE_JS;
+        }
+
+        // Check if separator is not defined
+        if (!this._separator) {
+            return STATUS_SEPARATOR_NOT_DEFINED;
+        }
+
+        // Check if no anchor elements with SMS hrefs are found in the given context.
+        if (!(anchors = (context || document).querySelectorAll('a[href^="sms:"]')).length) {
+            return STATUS_NO_SMS_HREFS;
         }
 
         // Iterate over found anchors and fix their hrefs
@@ -149,7 +113,7 @@ export class SmsHref_PIAPI {
             anchor.href = await this.__fixValue(anchor.href as TSmsHrefValue) || '';
         }
 
-        return true;
+        return STATUS_SMS_HREFS_FIXED;
     }
 
     /**
@@ -165,7 +129,7 @@ export class SmsHref_PIAPI {
     public async __fixValue<T extends TSmsHrefValue>(value: T): Promise<TSmsHrefValue | null> {
 
         // Parse the value into phone number and message segments
-        let segments = this._parse(
+        const segments = this._parse(
             this._textEncoder(
                 replace(value, /&amp;/gi, '&'),
                 1

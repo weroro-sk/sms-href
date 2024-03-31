@@ -365,6 +365,24 @@ type SmsConfiguration = {
 
 ---
 
+# Function: lettersToPhoneNumber
+
+Function to convert letters to their corresponding phone numbers according to the standard telephone keypad mapping. Non-alphabetic characters remain unchanged.
+
+## Parameters
+
+- **value** (`string`): The string containing letters to be converted.
+
+## Return Value
+
+- (`string`): The string with letters converted to phone numbers.
+
+## Example
+
+```typescript
+lettersToPhoneNumber("Hello, World!"); // Returns '43556, 96753!'
+```
+
 ---
 
 ---

@@ -81,7 +81,7 @@ export const lettersToPhoneNumber = <T extends string, U = UnionFromString<T>>(v
  * const errorDecodeValue = messageCoder("Tax is 20%", 1); // Example error decoding a value
  * console.log(errorDecodeValue); // Output: 'Tax is 20%'
  */
-const messageCoder = (value: string, decode?: 0 | 1): string => {
+export const messageCoder = (value: string, decode?: 0 | 1): string => {
     try {
         value = decode
             ? decodeURIComponent(value)
