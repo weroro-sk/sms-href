@@ -23,18 +23,36 @@ export namespace Message {
 export namespace Constructor {
     type TSeparator = Message.TSeparator;
 
+    export type TExcept =
+    //| (() => boolean)
+        | boolean;
+
     export type TOptions = {
         /** Array of booleans indicating whether to exclude particular options. */
-        except?: boolean[];
+        except?: TExcept[],
         /** Separator to be used in the SMS href. */
-        separator?: TSeparator;
+        separator?: TSeparator,
         /** Middleware function to transform phone number value. */
-        phoneMiddleware?: TMiddlewareFunction;
+        phoneMiddleware?: TMiddlewareFunction,
         /** Middleware function to transform message value. */
-        messageMiddleware?: TMiddlewareFunction;
+        messageMiddleware?: TMiddlewareFunction,
         /** */
         /** Boolean indicating whether to encode the generated href. */
-        textEncoder?: TMiddlewareFunction;
+        textEncoder?: TMiddlewareFunction
+    };
+
+    export type TOptions_PIAPI = {
+        /** Array of booleans indicating whether to exclude particular options. */
+        __except?: TExcept[];
+        /** Separator to be used in the SMS href. */
+        __separator?: TSeparator;
+        /** Middleware function to transform phone number value. */
+        __phoneMiddleware?: TMiddlewareFunction;
+        /** Middleware function to transform message value. */
+        __messageMiddleware?: TMiddlewareFunction;
+        /** */
+        /** Boolean indicating whether to encode the generated href. */
+        __textEncoder?: TMiddlewareFunction;
     };
 
     export type TMiddlewareFunction = (value: string) => string;

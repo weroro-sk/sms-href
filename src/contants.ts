@@ -17,9 +17,9 @@ export const STATUS_SEPARATOR_NOT_DEFINED = 4;
 
 export const translateMessages = (code: number) => new Map([
     [STATUS_IS_NODE_JS, 'This function is not available in Node.js environment'],
-    [STATUS_NO_SMS_HREFS, 'No SMS hrefs found'],
-    [STATUS_SMS_HREFS_FIXED, 'SMS hrefs fixed'],
-    [STATUS_SEPARATOR_NOT_DEFINED, 'Separator is not defined.'],
+    [STATUS_NO_SMS_HREFS, 'Anchors with sms: href value doesn\'t exist'],
+    [STATUS_SMS_HREFS_FIXED, 'SMS href values in anchors on this webpage was updated'],
+    [STATUS_SEPARATOR_NOT_DEFINED, 'Separator is not defined or current platform doesn\'t support sms: href protocol.'],
 ]).get(code) || 'Unknown message';
 
 /**

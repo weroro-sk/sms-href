@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
+    "target": "ES2022",
+    "module": "ES2022",
     "rootDir": "src",
     "outDir": "lib",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
-    "sourceMap": true,
+    //"sourceMap": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "alwaysStrict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    //"removeComments": false
   },
   "include": [
     "./src"

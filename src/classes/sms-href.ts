@@ -1,10 +1,33 @@
 import {SmsHref_PIAPI} from "./sms-href-piapi";
-import {ISmsHref} from "./sms-href.interface";
-import {TContext, Message} from "./types";
+import {TContext, Message, Constructor} from "./types";
 import TPhone = Message.TPhone;
 import TMessage = Message.TMessage;
+import TOptions = Constructor.TOptions;
 
-export class SmsHref extends SmsHref_PIAPI implements ISmsHref {
+export class SmsHref extends SmsHref_PIAPI {
+
+    /**
+     * Constructs an instance of SmsHref.
+     *
+     * @param {TOptions} [opt] - Options for SmsHref.
+     *
+     * @example
+     * const smsHrefInstance = new SmsHref({
+     *     except: [false, true, false], // Example except array
+     *     separator: SEPARATOR_ANDROID, // Example custom separator
+     *     encode: true, // Example encoding enabled
+     *     transform: (value: string) => '+1' + value // Example custom transform function adding country code
+     * });
+     */
+    public constructor(opt?: TOptions) {
+        super({
+            __except: opt?.except,
+            __separator: opt?.separator,
+            __textEncoder: opt?.textEncoder,
+            __phoneMiddleware: opt?.phoneMiddleware,
+            __messageMiddleware: opt?.messageMiddleware,
+        });
+    }
 
     /**
      * Fixes all SMS hrefs within a given context.
@@ -16,7 +39,10 @@ export class SmsHref extends SmsHref_PIAPI implements ISmsHref {
      * @example
      * await smsHrefInstance.fixAll(document.body); // Example fixing all SMS hrefs within the document body
      */
-    fixAll(context?: TContext | undefined, shouldBypassNodeJs?: boolean | undefined): Promise<number> {
+    fixAll(context?: TContext | undefined, shouldBypassNodeJs?: boolean | undefined): Promise<{
+        code: number,
+        errors?: HTMLAnchorElement[]
+    }> {
         return this.__fixAll(context, shouldBypassNodeJs);
     }
 

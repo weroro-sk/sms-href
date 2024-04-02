@@ -18,9 +18,9 @@
     <section class="mt-5">
         <h3 class="text-center">Update all SMS href anchor links on webpage</h3>
         <div class="row">
-            <a href="sms:098732165@body=You clicked on the Red link." class="col-sm p-3 mb-2 bg-danger text-white">Red
+            <a href="sms:098732165?body=You clicked on the Red link." class="col-sm p-3 mb-2 bg-danger text-white">Red
                 SMS Link</a>
-            <a href="sms:+421987321653@body=You clicked on the Green link."
+            <a href="sms:+421987321653?body=You clicked on the Green link."
                class="col-sm p-3 mb-2 bg-success text-white">Green SMS Link</a>
             <a href="sms:00421987321652@body=You clicked on the Blue link."
                class="col-sm p-3 mb-2 bg-primary text-white">Blue SMS Link</a>
@@ -38,12 +38,6 @@
                 <div class="form-group col-md-6">
                     <label for="phone">Phone number</label>
                     <input type="text" name="create-phone" class="form-control" id="phone" autocomplete="off">
-
-                    <div class="form-check pt-3">
-                        <input class="form-check-input" type="checkbox" value="" id="encode-create">
-                        <label class="form-check-label" for="encode-create">Enable message encoding</label>
-                    </div>
-
                 </div>
 
                 <div class="form-group col-md-6">
@@ -79,11 +73,6 @@
                 <div class="form-group col-md-6">
                     <label for="sms-text">SMS href link for update</label>
                     <textarea class="form-control" id="sms-text" autocomplete="off"></textarea>
-
-                    <div class="form-check pt-3 pb-3">
-                        <input class="form-check-input" type="checkbox" value="" id="encode-update">
-                        <label class="form-check-label" for="encode-update">Enable message encoding</label>
-                    </div>
                 </div>
 
                 <div class="form-group col-md-6">

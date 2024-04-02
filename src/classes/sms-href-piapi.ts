@@ -2,20 +2,23 @@ import {isAndroid, isIOS} from "../detectors";
 import {
     SEPARATOR_ANDROID,
     SEPARATOR_IOS,
-    SEPARATOR_IOS_7, STATUS_IS_NODE_JS,
-    STATUS_NO_SMS_HREFS, STATUS_SEPARATOR_NOT_DEFINED,
+    SEPARATOR_IOS_7,
+
+    STATUS_IS_NODE_JS,
+    STATUS_NO_SMS_HREFS,
+    STATUS_SEPARATOR_NOT_DEFINED,
     STATUS_SMS_HREFS_FIXED
 } from "../contants";
-import {ISmsHref_PIAPI} from "./sms-href-piapi.interface";
 // types
 import {Constructor, Message, TContext} from "./types";
 import TSeparator = Message.TSeparator;
 import TMiddlewareFunction = Constructor.TMiddlewareFunction;
-import TOptions = Constructor.TOptions;
+import TExcept = Constructor.TExcept;
 import TSmsHrefValue = Message.TSmsHrefValue;
 import TPhone = Message.TPhone;
 import TMessage = Message.TMessage;
 import TSegments = Message.TSegments;
+import TOptions_PIAPI = Constructor.TOptions_PIAPI;
 
 
 const replace = (str: string, searchValue: string | RegExp, replaceValue: string = ''): string =>
@@ -24,10 +27,11 @@ const replace = (str: string, searchValue: string | RegExp, replaceValue: string
 /**
  * Class representing a utility for generating and fixing SMS hrefs.
  */
-export class SmsHref_PIAPI implements ISmsHref_PIAPI {
+export class SmsHref_PIAPI {
 
     /**
      * Separator to be used in SMS hrefs.
+     *
      * @private
      * @readonly
      */
@@ -35,6 +39,7 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
 
     /**
      * Function to transform phone number value.
+     *
      * @private
      * @readonly
      */
@@ -42,6 +47,7 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
 
     /**
      * Function to transform message value.
+     *
      * @private
      * @readonly
      */
@@ -57,7 +63,7 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
     /**
      * Constructs an instance of SmsHref_PIAPI.
      *
-     * @param {TOptions} opt - Options for SmsHref_PIAPI.
+     * @param {TOptions} [opt] - Options for SmsHref_PIAPI.
      *
      * @example
      * const smsHrefInstance = new SmsHref_PIAPI({
@@ -67,15 +73,15 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
      *     transform: (value: string) => '+1' + value // Example custom transform function adding country code
      * });
      */
-    public constructor(opt: TOptions) {
+    public constructor(opt?: TOptions_PIAPI) {
         // Determine separator based on provided options or platform
-        this._separator = this._getSeparator(opt?.separator, opt?.except || []);
+        this._separator = this._getSeparator(opt?.__separator, opt?.__except);
         const identityFunction = (value: string): string => value;
         // Assign middleware functions or use identity function
-        this._phoneMiddleware = opt?.phoneMiddleware || identityFunction;
-        this._messageMiddleware = opt?.messageMiddleware || identityFunction;
+        this._phoneMiddleware = opt?.__phoneMiddleware || identityFunction;
+        this._messageMiddleware = opt?.__messageMiddleware || identityFunction;
 
-        this._textEncoder = opt?.textEncoder || identityFunction;
+        this._textEncoder = opt?.__textEncoder || identityFunction;
     }
 
     /**
@@ -88,54 +94,61 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
      * @example
      * await smsHrefInstance.__fixAll(document.body); // Example fixing all SMS hrefs within the document body
      */
-    public async __fixAll(context?: TContext, shouldBypassNodeJs?: boolean): Promise<number> {
+    public async __fixAll(context?: TContext, shouldBypassNodeJs?: boolean): Promise<{
+        code: number,
+        errors?: HTMLAnchorElement[]
+    }> {
 
         let anchor: HTMLAnchorElement;
         let anchors: NodeListOf<HTMLAnchorElement>;
+        let value: Message.TSmsHrefValue | null;
+        let errors: HTMLAnchorElement[] = [];
 
-        // Check if not running in Node.js or bypass flag is not set
-        if (typeof global !== 'undefined' && !shouldBypassNodeJs) {
-            return STATUS_IS_NODE_JS;
+        // Check if running in Node.js
+        if (typeof window === 'undefined' && !shouldBypassNodeJs) {
+            return {code: STATUS_IS_NODE_JS};
         }
 
         // Check if separator is not defined
         if (!this._separator) {
-            return STATUS_SEPARATOR_NOT_DEFINED;
+            return {code: STATUS_SEPARATOR_NOT_DEFINED};
         }
 
         // Check if no anchor elements with SMS hrefs are found in the given context.
         if (!(anchors = (context || document).querySelectorAll('a[href^="sms:"]')).length) {
-            return STATUS_NO_SMS_HREFS;
+            return {code: STATUS_NO_SMS_HREFS};
         }
 
         // Iterate over found anchors and fix their hrefs
         for (anchor of anchors) {
-            anchor.href = await this.__fixValue(anchor.href as TSmsHrefValue) || '';
+            if ((value = await this.__fixValue(anchor.href as TSmsHrefValue))) {
+                anchor.href = value;
+            } else {
+                errors.push(anchor);
+            }
         }
 
-        return STATUS_SMS_HREFS_FIXED;
+        return {code: STATUS_SMS_HREFS_FIXED, errors};
     }
 
     /**
      * Fixes a single SMS href value.
      *
-     * @param {TSmsHrefValue} value - The SMS href value to fix.
-     * @returns {Promise<TSmsHrefValue>} A promise resolving to the fixed SMS href value.
+     * @param {string} value - The SMS href value to fix.
+     * @returns {Promise<TSmsHrefValue|null>} A promise resolving to the fixed SMS href value.
      *
      * @example
      * const fixedHref = await smsHrefInstance.__fixValue('sms:123456789?body=Hello%2C%20world'); // Example fixing a single SMS href
      * console.log(fixedHref); // Output: 'sms:123456789?body=Hello%2C%20world' (If no transformation or changes applied)
      */
-    public async __fixValue<T extends TSmsHrefValue>(value: T): Promise<TSmsHrefValue | null> {
+    public async __fixValue(value: string): Promise<TSmsHrefValue | null> {
 
         // Parse the value into phone number and message segments
-        const segments = this._parse(
-            this._textEncoder(
-                replace(value, /&amp;/gi, '&'),
-                1
-            ) as TSmsHrefValue
+        const segments = this._parser(
+            this._textEncoder(replace(value, /&amp;/gi, '&'), 1) as TSmsHrefValue
         );
 
+        // Check if no segments were found
         if (!segments) {
             return segments;
         }
@@ -170,7 +183,7 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
         }
 
         // Construct the final href value
-        return (value ? 'sms:' + value : null) as TSmsHrefValue;
+        return (value ? 'sms:' + value as TSmsHrefValue : null);
     }
 
     /**
@@ -181,16 +194,16 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
      *
      * @private
      * @example
-     * const parsedSegments = this._parse("sms:123456789?body=Hello, world!"); // Example parsing an SMS href value
+     * const parsedSegments = this._parser("sms:123456789?body=Hello, world!"); // Example parsing an SMS href value
      * console.log(parsedSegments); // Output: {_phone: "123456789", _message: "Hello, world!"}
      */
-    private _parse(value: TSmsHrefValue): TSegments | null {
+    private _parser(value: TSmsHrefValue): TSegments | null {
         // Regular expression to match SMS href format and extract phone number and message segments
-        let [_, _phone, _message] = value.match(/^sms:\/*(.+)?[&?;]body=(.+)$/i) || [];
+        let [_, _phone, _message] = value.match(/^sms:\/*([0-9+A-Z]+)?(?:[^0-9A-Z]body=(.+)?)?$/i) || [];
 
         // Remove any white spaces from the phone number and message segments
         _phone = replace(_phone, /\s+/g);
-        _message = replace(_message, /\s+/g, ' ').trim();
+        _message = replace(_message, /\s+/g, ' ')?.trim();
 
         // If either phone number and message is not present, return null
         // Return an object containing phone number and message segments
@@ -200,8 +213,8 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
     /**
      * Determines the separator to be used based on options and platform.
      *
-     * @param {TSeparator} customSeparator - An optional custom separator provided in the options.
-     * @param {boolean[]} except - Array of booleans indicating whether to exclude particular options.
+     * @param {TSeparator} [customSeparator] - An optional custom separator provided in the options.
+     * @param {boolean[]} [except] - Array of booleans indicating whether to exclude particular options.
      * @returns {TSeparator | null} The determined separator or null if no separator is applicable.
      *
      * @private
@@ -209,16 +222,20 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
      * const separator = this._getSeparator(SEPARATOR_IOS); // Example getting separator based on custom separator
      * console.log(separator); // Output: '&'
      */
-    private _getSeparator(customSeparator: TSeparator | undefined, except: boolean[]): TSeparator | null {
+    private _getSeparator(customSeparator?: TSeparator, except?: TExcept[]): TSeparator | null {
+
         let ios: number;
+
         // If any exceptions are included, return null
-        if (except.includes(true)) {
+        if (except?.includes(true)) {
             return null;
         }
+
         // If custom separator is provided, use it
         if (customSeparator) {
             return customSeparator;
         }
+
         // Determine separator based on platform
         if (isAndroid()) {
             return SEPARATOR_ANDROID;
@@ -226,6 +243,9 @@ export class SmsHref_PIAPI implements ISmsHref_PIAPI {
         if (!!(ios = isIOS())) {
             return ios < 8 ? SEPARATOR_IOS_7 : SEPARATOR_IOS;
         }
+
+        // If no platform is detected, return null
+        // If no separator is applicable, return null
         return null;
     }
 }

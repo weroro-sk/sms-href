@@ -12,6 +12,22 @@ on a web page or in a defined DOM context.
 > 💡 **Tip:** You can avoid this library and use the universal separator `;?&` (_all three characters in that order_),
 > but it doesn't work everywhere.
 
+### Build size
+| RAW                  | MINIFIED (`mangle=false`) | MINIFIED (`mangle=true`) | MINIFIED (`mangle=/^_/`) | MINIFIED + GZIP |
+|----------------------|---------------------------|--------------------------|--------------------------|-----------------|
+| 3.06KiB (3133 Bytes) | 1.76KiB (1806 Bytes)      | 1.28KiB (1308 Bytes)     | 0.99KiB (1015 Bytes)     | 700 Bytes       |
+
+### Terser: 
+```javascript
+{
+    mangle: {
+        properties: {
+            regex: /^_/
+        }
+    }
+}
+```
+
 |                                              |                                      |                                                            |
 |----------------------------------------------|--------------------------------------|------------------------------------------------------------|
 | Minified & GZIP-ed build size: **660 Bytes** | 💻 **[Installation](#installation)** | ✨ **[Basic usage](#basic-usage-without-catching-outputs)** |
@@ -364,24 +380,6 @@ type SmsConfiguration = {
 ```
 
 ---
-
-# Function: lettersToPhoneNumber
-
-Function to convert letters to their corresponding phone numbers according to the standard telephone keypad mapping. Non-alphabetic characters remain unchanged.
-
-## Parameters
-
-- **value** (`string`): The string containing letters to be converted.
-
-## Return Value
-
-- (`string`): The string with letters converted to phone numbers.
-
-## Example
-
-```typescript
-lettersToPhoneNumber("Hello, World!"); // Returns '43556, 96753!'
-```
 
 ---
 
