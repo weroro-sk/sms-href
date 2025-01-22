@@ -25,6 +25,8 @@
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/weroro-sk/sms-href?label=github%20release&style=flat-square&logo=github">
   </a>
 
+  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.81_kB-orange?style=flat-square&logo=webpack">
+
 </p>
 
 ---
@@ -39,13 +41,6 @@
 
 > You can avoid this library and use the universal separator `;?&` (all three characters in that order),
 > but it doesn't work everywhere.
-
-
----
-
-<p align="center">
-  <img alt="demo" src="https://img.shields.io/badge/Webpack_build_size-<_1.81_kB-orange?style=flat-square&logo=webpack">
-</p>
 
 ---
 
