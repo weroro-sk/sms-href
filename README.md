@@ -1,8 +1,8 @@
-<h1 align="center" style="display:flex;justify-content:center;gap:.5rem">
+<h1 align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="sms-href_logo.svg">
 <source media="(prefers-color-scheme: light)" srcset="sms-href_logo.svg">
-<img alt="SMS Href" height="40px" src="sms-href_logo.svg">
+<img alt="SMS Href" align="top" height="40px" src="sms-href_logo.svg">
 </picture> SMS Href</h1>
 
 <p align="center">
