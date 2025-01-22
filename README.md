@@ -37,9 +37,9 @@
 
 ---
 
-<p align="center">
-  <i>You can avoid this library and use the universal separator<br><code>;?&</code> (all three characters in that order),<br> but it doesn't work everywhere.</i>
-</p>
+> You can avoid this library and use the universal separator `;?&` (all three characters in that order),
+> but it doesn't work everywhere.
+
 
 ---
 
